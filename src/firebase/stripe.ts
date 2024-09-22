@@ -81,7 +81,7 @@ export const getSubscriptionInfo = async (uid: string) => {
         const priceDoc = await getDoc(subscription.price);
         if (priceDoc.exists()) {
           const priceData = priceDoc.data() as { unit_amount: number };
-          return { ...subscription, priceAmount: priceData.unit_amount }; // Assuming 'unit_amount' stores the price in cents
+          return { ...subscription, priceAmount: priceData.unit_amount };
         } else {
           return { ...subscription, priceAmount: 0 }; // Default to 0 if price not found
         }
