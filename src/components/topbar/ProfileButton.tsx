@@ -24,6 +24,10 @@ export default function ProfileButton() {
     router.push("/subscription");
   };
 
+  const handleContact = () => {
+    router.push("/contact");
+  };
+
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
@@ -31,10 +35,7 @@ export default function ProfileButton() {
   // Close dropdown when clicking outside
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
-      if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(event.target as Node)
-      ) {
+      if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setDropdownOpen(false);
       }
     };
@@ -67,6 +68,12 @@ export default function ProfileButton() {
             className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
           >
             Subscription
+          </button>
+          <button
+            onClick={handleContact}
+            className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100"
+          >
+            Contact Us
           </button>
           <button
             onClick={handleSignOut}

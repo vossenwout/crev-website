@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/firebase/auth";
 import { useRouter } from "next/navigation";
@@ -10,9 +10,11 @@ export default function EmailLoginPage() {
   const [user, loading] = useAuthState(auth);
   const router = useRouter();
 
-  if (user) {
-    router.push("/home");
-  }
+  useEffect(() => {
+    if (user) {
+      router.push("/home");
+    }
+  }, [user]);
 
   return (
     <div className="p-3 min-h-screen font-[family-name:var(--font-geist-sans)]">

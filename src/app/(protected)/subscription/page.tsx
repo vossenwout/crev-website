@@ -6,56 +6,128 @@ import NavigationButton from "@/components/topbar/NavigationButton";
 import LogoButton from "@/components/topbar/LogoButton";
 import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { createCheckoutSession, getCustomerPortal } from "@/firebase/stripe";
+import { createCheckoutSession, getCustomerPortal, getSubscriptionInfo } from "@/firebase/stripe";
+import { SubscriptionID } from "@/data/subscriptions";
+import { useRouter } from "next/navigation";
+import { SubscriptionPlans } from "@/data/subscriptions";
+import SubscriptionCard from "@/components/subscriptions/SubscriptionCard";
 
 export default function Subscription() {
-  const [documentLoading, setDocumentLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
-  // in the layout.tsx we are already checking if the user is authenticated
   const [user] = useAuthState(auth);
   const [stripeLoading, setStripeLoading] = useState(false);
-  // add loading until we get the claims
+  const [isLoadingUserSubscription, setIsLoadingUserSubscription] = useState(true);
+  const [currentSubscriptionId, setCurrentSubscriptionId] = useState<SubscriptionID | null>(null);
+  const router = useRouter();
+  const plans = SubscriptionPlans;
 
   useEffect(() => {
     if (user) {
-      console.log("User is authenticated:", user);
-      user.getIdTokenResult().then((idTokenResult) => {
-        console.log("User claims:", idTokenResult.claims);
+      getSubscriptionInfo(user.uid).then((subscriptionInfo) => {
+        if (subscriptionInfo) {
+          setCurrentSubscriptionId(subscriptionInfo.id);
+        }
+        setIsLoadingUserSubscription(false);
       });
     }
   }, [user]);
 
-  const handleDummyCheckout = async () => {
-    if (user) {
-      setStripeLoading(true);
-      //cheap
-      //createCheckoutSession(user.uid, "price_1Q0TGCLMFFF2hVk55ewoDsHa");
-      //medium
-      //createCheckoutSession(user.uid, "price_1Q1ZTpLMFFF2hVk5U3vFjemH");
-      //expensive
-      createCheckoutSession(user.uid, "price_1Q1ZUSLMFFF2hVk5h3LmOJYG");
-    }
+  const redirectToCheckout = async (uid: string, priceId: string) => {
+    setStripeLoading(true);
+    createCheckoutSession(uid, priceId);
   };
+  // pricing plans same as in src/app/pricing/page.tsx
+  const pricingPlansNoSubscription = [
+    {
+      title: plans.hobby.name,
+      price: "$" + plans.hobby.price,
+      features: [
+        plans.hobby.usageLimits.maxDailyReviews + " Daily AI Reviews",
+        plans.hobby.usageLimits.maxInputTokens + "k Input Tokens Limit",
+      ],
+      buttonText: "Subscribe",
+      buttonAction: () => user?.uid && redirectToCheckout(user.uid, plans.hobby.stripePriceId),
+    },
+    {
+      title: plans.premium.name,
+      price: "$" + plans.premium.price,
+      features: [
+        plans.premium.usageLimits.maxDailyReviews + " Daily AI Reviews",
+        plans.premium.usageLimits.maxInputTokens + "k Input Tokens Limit",
+      ],
+      buttonText: "Subscribe",
+      buttonAction: () => user?.uid && redirectToCheckout(user.uid, plans.premium.stripePriceId),
+      highlight: true, // Highlight this plan
+      highlightText: "Most Popular",
+    },
+    {
+      title: plans.pro.name,
+      price: "$" + plans.pro.price,
+      features: [
+        plans.pro.usageLimits.maxDailyReviews + " Daily AI Reviews",
+        plans.pro.usageLimits.maxInputTokens + "k Input Tokens Limit",
+        "(COMING SOON) Advanced Reasoning Model: GPT-o1-preview  ",
+      ],
+      buttonText: "Subscribe",
+      buttonAction: () => user?.uid && redirectToCheckout(user.uid, plans.pro.stripePriceId),
+    },
+  ];
 
-  const handleDummyPortal = async () => {
-    if (user) {
-      setStripeLoading(true);
-      getCustomerPortal();
-    }
+  const pricingPlansWithSubscription = [
+    {
+      title: plans.hobby.name,
+      price: "$" + plans.hobby.price,
+      features: [
+        plans.hobby.usageLimits.maxDailyReviews + " Daily AI Reviews",
+        plans.hobby.usageLimits.maxInputTokens + "k Input Tokens Limit",
+      ],
+      buttonText: "Update plan",
+      buttonAction: () => redirectToPortal(),
+      highlight: currentSubscriptionId === plans.hobby.id, // Highlight this plan
+      highlightText: "Current plan",
+    },
+    {
+      title: plans.premium.name,
+      price: "$" + plans.premium.price,
+      features: [
+        plans.premium.usageLimits.maxDailyReviews + " Daily AI Reviews",
+        plans.premium.usageLimits.maxInputTokens + "k Input Tokens Limit",
+      ],
+      buttonText: "Update plan",
+      buttonAction: () => redirectToPortal(),
+      highlight: currentSubscriptionId === plans.premium.id, // Highlight this plan
+      highlightText: "Current Plan",
+    },
+    {
+      title: plans.pro.name,
+      price: "$" + plans.pro.price,
+      features: [
+        plans.pro.usageLimits.maxDailyReviews + " Daily AI Reviews",
+        plans.pro.usageLimits.maxInputTokens + "k Input Tokens Limit",
+        "(COMING SOON) Advanced Reasoning Model: GPT-o1-preview  ",
+      ],
+      buttonText: "Update plan",
+      buttonAction: () => redirectToPortal(),
+      highlight: currentSubscriptionId === plans.pro.id, // Highlight this plan
+      highlightText: "Current plan",
+    },
+  ];
+
+  const redirectToPortal = async () => {
+    setStripeLoading(true);
+    getCustomerPortal();
   };
 
   if (stripeLoading) {
+    {
+      /* Load stripe because user clicked checkout or wants to go to customer portal */
+    }
     return (
       <div className="p-3 min-h-screen font-[family-name:var(--font-geist-sans)]">
         <div className="flex justify-between border-b-gray-100 pb-2 border-b-2 h-14">
           <LogoButton title="CREV" href="/home" />
           <div className="flex gap-4">
             <NavigationButton title="Docs" href="/docs" active={false} />
-            <NavigationButton
-              title="Code Review API Key"
-              href="/api-key"
-              active={false}
-            />
+            <NavigationButton title="Code Review API Key" href="/api-key" active={false} />
             <ProfileButton />
           </div>
         </div>
@@ -74,41 +146,90 @@ export default function Subscription() {
       </div>
     );
   } else {
-    return (
-      <div className="p-3 min-h-screen font-[family-name:var(--font-geist-sans)]">
-        <div className="flex justify-between border-b-gray-100 pb-2 border-b-2 h-14">
-          <LogoButton title="CREV" href="/home" />
-          <div className="flex gap-4">
-            <NavigationButton title="Docs" href="/docs" active={false} />
-            <NavigationButton
-              title="Code Review API Key"
-              href="/api-key"
-              active={false}
-            />
-            <ProfileButton />
+    if (isLoadingUserSubscription) {
+      {
+        /* Loading subscription */
+      }
+      return (
+        <div className="p-3 min-h-screen font-[family-name:var(--font-geist-sans)]">
+          <div className="flex justify-between border-b-gray-100 pb-2 border-b-2 h-14">
+            <LogoButton title="CREV" href="/home" />
+            <div className="flex gap-4">
+              <NavigationButton title="Docs" href="/docs" active={false} />
+              <NavigationButton title="Code Review API Key" href="/api-key" active={false} />
+              <ProfileButton />
+            </div>
+          </div>
+          <div className="flex items-center justify-center flex-col space-y-4 pb-10 pt-2 ">
+            <h1 className="text-2xl font-bold">Manage Subscription Page</h1>
+            <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-black"></div>
           </div>
         </div>
-        <div className="flex items-center justify-center flex-col space-y-4 pb-10 pt-2 ">
-          <h1 className="text-2xl font-bold">Manage Subscription Page</h1>
-
-          <button
-            onClick={() => handleDummyCheckout()}
-            className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
-            disabled={documentLoading}
-          >
-            {documentLoading ? "Writing..." : "Buy subscription"}
-          </button>
-
-          <button
-            onClick={() => handleDummyPortal()}
-            className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
-            disabled={documentLoading}
-          >
-            {documentLoading ? "Writing..." : "Open Customer Portal"}
-          </button>
-          {error && <p className="text-red-500">Error: {error}</p>}
-        </div>
-      </div>
-    );
+      );
+    } else {
+      {
+        /* Active subscription*/
+      }
+      if (currentSubscriptionId) {
+        return (
+          <div className="p-3 min-h-screen font-[family-name:var(--font-geist-sans)]">
+            <div className="flex justify-between border-b-gray-100 pb-2 border-b-2 h-14">
+              <LogoButton title="CREV" href="/home" />
+              <div className="flex gap-4">
+                <NavigationButton title="Docs" href="/docs" active={false} />
+                <NavigationButton title="Code Review API Key" href="/api-key" active={false} />
+                <ProfileButton />
+              </div>
+            </div>
+            <div className="flex items-center justify-center flex-col space-y-4 pb-10 pt-2 ">
+              <h1 className="text-2xl font-bold">Manage your subscription</h1>
+              {/* Pricing Cards */}
+              <div className="text-center max-w-3xl mx-auto mb-8">
+                <p className="text-lg text-gray-700">
+                  Here you can upgrade / downgrade or cancel your current subscription.
+                </p>
+              </div>
+              <div className="max-w-7xl mx-auto grid gap-8 sm:grid-cols-1 md:grid-cols-3">
+                {pricingPlansWithSubscription.map((plan, index) => (
+                  <SubscriptionCard key={index} {...plan} />
+                ))}
+              </div>
+            </div>
+          </div>
+        );
+      } else {
+        {
+          /* No active subscription*/
+        }
+        return (
+          <div className="p-3 min-h-screen font-[family-name:var(--font-geist-sans)]">
+            <div className="flex justify-between border-b-gray-100 pb-2 border-b-2 h-14">
+              <LogoButton title="CREV" href="/home" />
+              <div className="flex gap-4">
+                <NavigationButton title="Docs" href="/docs" active={false} />
+                <NavigationButton title="Code Review API Key" href="/api-key" active={false} />
+                <ProfileButton />
+              </div>
+            </div>
+            <div className="flex items-center justify-center flex-col space-y-4 pb-10 pt-2 ">
+              <h1 className="text-2xl font-bold">Choose your plan</h1>
+              {/* Pricing Cards */}
+              <div className="text-center max-w-3xl mx-auto mb-8">
+                <p className="text-lg text-gray-700">
+                  Bundling your code with the <strong>crev bundle</strong> command is completely
+                  free! However, to run the <strong>crev review</strong> command and let an expert
+                  coding AI review your code you can choose one of the following plans.
+                </p>
+              </div>
+              <div className="max-w-7xl mx-auto grid gap-8 sm:grid-cols-1 md:grid-cols-3">
+                {pricingPlansNoSubscription.map((plan, index) => (
+                  <SubscriptionCard key={index} {...plan} />
+                ))}
+              </div>
+            </div>
+          </div>
+        );
+      }
+    }
   }
 }

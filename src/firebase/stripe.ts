@@ -1,4 +1,4 @@
-import { SubscriptionID } from "@/data/subscriptions";
+import { SubscriptionID, SubscriptionPlan, SubscriptionPlans } from "@/data/subscriptions";
 import { db, functions } from "./config";
 import {
   collection,
@@ -13,14 +13,11 @@ import {
 import { httpsCallable } from "firebase/functions";
 
 export const createCheckoutSession = async (uid: string, priceId: string) => {
-  const checkoutSessionRef = await addDoc(
-    collection(db, "customers", uid, "checkout_sessions"),
-    {
-      price: priceId,
-      success_url: process.env.NEXT_PUBLIC_CHECKOUT_SUCCESS_URL,
-      cancel_url: process.env.NEXT_PUBLIC_CHECKOUT_CANCEL_URL,
-    }
-  );
+  const checkoutSessionRef = await addDoc(collection(db, "customers", uid, "checkout_sessions"), {
+    price: priceId,
+    success_url: process.env.NEXT_PUBLIC_CHECKOUT_SUCCESS_URL,
+    cancel_url: process.env.NEXT_PUBLIC_CHECKOUT_CANCEL_URL,
+  });
   // Wait for the CheckoutSession to get attached by the extension
   onSnapshot(
     doc(db, "customers", uid, "checkout_sessions", checkoutSessionRef.id),
@@ -40,10 +37,7 @@ export const createCheckoutSession = async (uid: string, priceId: string) => {
 };
 
 export const getCustomerPortal = async () => {
-  const functionRef = httpsCallable(
-    functions,
-    "ext-firestore-stripe-payments-createPortalLink"
-  );
+  const functionRef = httpsCallable(functions, "ext-firestore-stripe-payments-createPortalLink");
   const { data } = await functionRef({
     returnUrl: process.env.NEXT_PUBLIC_PORTAL_RETURN_URL,
     locale: "auto",
@@ -52,7 +46,7 @@ export const getCustomerPortal = async () => {
   window.location.assign(portalData.url);
 };
 
-export const getSubscriptionInfo = async (uid: string) => {
+export const getSubscriptionInfo = async (uid: string): Promise<SubscriptionPlan | null> => {
   try {
     // Reference to the subscriptions collection for the given user
     const collectionRef = collection(db, "customers", uid, "subscriptions");
@@ -75,15 +69,19 @@ export const getSubscriptionInfo = async (uid: string) => {
       subscriptions.map(async (subscription) => {
         // Handle cases where 'subscription.price' is undefined or invalid
         if (!subscription.price) {
-          return { ...subscription, priceAmount: 0 };
+          return { ...subscription, priceAmount: 0, role: subscription.role };
         }
 
         const priceDoc = await getDoc(subscription.price);
         if (priceDoc.exists()) {
           const priceData = priceDoc.data() as { unit_amount: number };
-          return { ...subscription, priceAmount: priceData.unit_amount };
+          return {
+            ...subscription,
+            priceAmount: priceData.unit_amount,
+            role: subscription.role,
+          };
         } else {
-          return { ...subscription, priceAmount: 0 }; // Default to 0 if price not found
+          return { ...subscription, priceAmount: 0, role: subscription.role }; // Default to 0 if price not found
         }
       })
     );
@@ -94,12 +92,11 @@ export const getSubscriptionInfo = async (uid: string) => {
     );
 
     console.log("Sorted subscriptions:", sortedSubscriptions);
-    const mostExpensiveSubscription = sortedSubscriptions[0] as {
-      priceAmount: number;
-      role: SubscriptionID;
-    };
-    // Return the most expensive subscription
-    return mostExpensiveSubscription;
+    const mostExpensiveSubscriptionRole = sortedSubscriptions[0].role as SubscriptionID;
+
+    // Get the most expensive subscription plan
+    // Important role needs to be the subscriptionID
+    return SubscriptionPlans[mostExpensiveSubscriptionRole];
   } catch (error) {
     // Log errors appropriately
     console.error("Error getting subscription info:", error);

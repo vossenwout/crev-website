@@ -3,45 +3,48 @@
 import SubscriptionCard from "@/components/subscriptions/SubscriptionCard";
 import LogoButton from "@/components/topbar/LogoButton";
 import NavigationButton from "@/components/topbar/NavigationButton";
+import { SubscriptionPlans } from "@/data/subscriptions";
 import { useRouter } from "next/navigation";
 
 export default function Pricing() {
   const router = useRouter();
+  const plans = SubscriptionPlans;
 
   const pricingPlans = [
     {
-      title: "Starter",
-      price: "$29",
+      title: plans.hobby.name,
+      price: "$" + plans.hobby.price,
       features: [
-        "Basic Feature One",
-        "Basic Feature Two",
-        "Basic Feature Three",
+        plans.hobby.usageLimits.maxDailyReviews + " Daily AI Code Reviews",
+        plans.hobby.usageLimits.maxInputTokens +
+          "k Input Tokens per Review Limit",
       ],
       buttonText: "Get Started",
-      buttonAction: () => router.push("/signup"),
+      buttonAction: () => router.push("/login"),
     },
     {
-      title: "Enthusiast",
-      price: "$59",
+      title: plans.premium.name,
+      price: "$" + plans.premium.price,
       features: [
-        "All Starter Features",
-        "Advanced Feature One",
-        "Advanced Feature Two",
+        plans.premium.usageLimits.maxDailyReviews + " Daily AI Code Reviews",
+        plans.premium.usageLimits.maxInputTokens +
+          "k Input Tokens per Review Limit",
       ],
-      buttonText: "Upgrade",
-      buttonAction: () => router.push("/upgrade"),
+      buttonText: "Get Started",
+      buttonAction: () => router.push("/login"),
       popular: true, // Highlight this plan
     },
     {
-      title: "Professional",
-      price: "$119",
+      title: plans.pro.name,
+      price: "$" + plans.pro.price,
       features: [
-        "All Professional Features",
-        "Dedicated Support",
-        "Custom Integrations",
+        plans.pro.usageLimits.maxDailyReviews + " Daily AI Code Reviews",
+        plans.pro.usageLimits.maxInputTokens +
+          "k Input Tokens per Review Limit",
+        "(COMING SOON) Advanced Reasoning Model: GPT-o1-preview  ",
       ],
-      buttonText: "Contact Us",
-      buttonAction: () => router.push("/contact"),
+      buttonText: "Get Started",
+      buttonAction: () => router.push("/login"),
     },
   ];
 

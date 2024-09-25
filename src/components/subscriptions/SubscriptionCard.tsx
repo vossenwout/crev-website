@@ -4,7 +4,8 @@ type SubscriptionCardProps = {
   features: string[];
   buttonText: string;
   currentPlan?: boolean;
-  popular?: boolean;
+  highlight?: boolean;
+  highlightText?: string;
   buttonAction: () => void;
 };
 
@@ -12,7 +13,7 @@ export default function SubscriptionCard(props: SubscriptionCardProps) {
   return (
     <div
       className={`flex flex-col rounded-lg border border-gray-300 shadow-sm overflow-hidden ${
-        props.currentPlan || props.popular ? "border-black" : ""
+        props.currentPlan || props.highlight ? "border-black" : ""
       }`}
     >
       {props.currentPlan && (
@@ -20,9 +21,9 @@ export default function SubscriptionCard(props: SubscriptionCardProps) {
           Current plan
         </div>
       )}
-      {props.popular && (
+      {props.highlight && (
         <div className="px-6 py-3 bg-black text-white text-sm font-semibold uppercase text-center">
-          Most popular
+          {props.highlightText}
         </div>
       )}
       <div className="px-6 py-8 flex-grow">

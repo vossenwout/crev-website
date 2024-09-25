@@ -96,7 +96,7 @@ export default function Home() {
             Interested in improving your code quality?
           </p>
           <button
-            onClick={() => router.push("/login")}
+            onClick={() => router.push("/docs")}
             className="px-6 py-3 bg-black text-white rounded-lg transition-colors duration-200 hover:bg-gray-800"
           >
             Get Started
