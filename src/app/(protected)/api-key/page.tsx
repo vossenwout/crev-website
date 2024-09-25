@@ -1,28 +1,30 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useRouter } from "next/navigation";
+
 import { auth } from "@/firebase/auth";
 import ProfileButton from "@/components/topbar/ProfileButton";
 import NavigationButton from "@/components/topbar/NavigationButton";
 import LogoButton from "@/components/topbar/LogoButton";
-import { useEffect, useState } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { useRouter } from "next/navigation";
 import { generateApiKey } from "@/firebase/functions/generateAPIKey";
 import { fetchApiKey } from "@/firebase/firestore";
 import { getSubscriptionInfo } from "@/firebase/stripe";
 
 export default function APIKey() {
   const [user] = useAuthState(auth);
-  // load user subscription status
-  const [isLoadingUserSubscription, setIsLoadingUserSubscription] = useState(true);
-  const [userSubscription, setUserSubscription] = useState<string | null>(null);
-  // load currently assigned api key
-  const [apiKey, setApiKey] = useState<string>("");
-  const [isLoadingApiKey, setIsLoadingApiKey] = useState(true);
-  // check if all user info is loaded this component requires
-  const [copySuccess, setCopySuccess] = useState("");
   const router = useRouter();
 
+  // Subscription and API key state
+  const [isLoadingUserSubscription, setIsLoadingUserSubscription] = useState(true);
+  const [userSubscription, setUserSubscription] = useState<string | null>(null);
+  const [apiKey, setApiKey] = useState<string>("");
+  const [isLoadingApiKey, setIsLoadingApiKey] = useState(true);
+  const [copySuccess, setCopySuccess] = useState("");
+  const [showModal, setShowModal] = useState(false);
+
+  // Fetch subscription and API key on component mount
   useEffect(() => {
     if (user) {
       getSubscriptionInfo(user.uid).then((subscriptionInfo) => {
@@ -31,7 +33,7 @@ export default function APIKey() {
         }
         setIsLoadingUserSubscription(false);
       });
-      // Fetch API key
+
       fetchApiKey(user.uid).then((apiKey) => {
         if (apiKey) {
           setApiKey(apiKey);
@@ -41,8 +43,10 @@ export default function APIKey() {
     }
   }, [user]);
 
+  // Handle API key generation with confirmation
   const handleGenerateAPIKey = async () => {
     try {
+      setApiKey("Generating...");
       const { apiKey } = await generateApiKey();
       setApiKey(apiKey);
       setCopySuccess("API Key Generated Successfully!");
@@ -50,9 +54,12 @@ export default function APIKey() {
     } catch (error) {
       setCopySuccess("Failed to Generate API Key.");
       setTimeout(() => setCopySuccess(""), 3000);
+    } finally {
+      setShowModal(false);
     }
   };
 
+  // Handle API key copy to clipboard
   const handleCopyAPIKey = () => {
     navigator.clipboard.writeText(apiKey).then(
       () => {
@@ -67,95 +74,119 @@ export default function APIKey() {
   };
 
   return (
-    <div className=" p-3 min-h-screen font-[family-name:var(--font-geist-sans)]  ">
-      {/* Top Header */}
+    <div className="p-3 min-h-screen font-[family-name:var(--font-geist-sans)]">
       <div className="flex justify-between border-b-gray-100 pb-2 border-b-2 h-14">
         <LogoButton title="CREV" href="/home" />
         <div className="flex gap-4">
           <NavigationButton title="Docs" href="/docs" active={false} />
-          <NavigationButton title="Code Review API Key" href="/api-key" active={true} />
+          <NavigationButton title="API Key" href="/api-key" active={true} />
           <ProfileButton />
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="max-w-4xl mx-auto mt-8 bg-white shadow-md rounded-lg p-8">
-        <h1 className="text-3xl font-semibold text-gray-800 mb-4">API Keys Management</h1>
-        <p className="text-gray-600 mb-6">
-          You need an active subscription to generate API keys which grant usage according to your
-          chosen plan.
-        </p>
+      <main className="flex-grow flex flex-col items-center justify-start mt-10 px-4">
+        <h1 className="text-3xl font-semibold text-gray-900 mb-8">Manage API Keys</h1>
 
-        {/* Subscription Status */}
-        <div className="mb-4">
-          <h2 className="text-xl font-medium text-gray-700 mb-2">Subscription Status</h2>
-          {isLoadingUserSubscription ? (
-            <p className="text-gray-500">Loading subscription status...</p>
-          ) : userSubscription ? (
-            <p className="text-green-600">Active Subscription: {userSubscription}</p>
-          ) : (
-            <p className="text-red-600">
-              No active subscription. Please purchase one to generate API keys.
-            </p>
-          )}
-        </div>
-
-        {/* Manage/Update Subscription Button */}
-        <div className="mb-6">
-          <button
-            onClick={() => router.push("/subscription")}
-            className="w-full bg-gray-500 text-white px-4 py-3 rounded-md hover:bg-gray-600 transition duration-200"
-          >
-            {userSubscription ? "Manage Subscription" : "Purchase Subscription"}
-          </button>
-        </div>
-        {/* Conditionally Render API Key Section */}
-        {userSubscription && (
-          <>
-            {/* Current API Key */}
-            <div className="mb-6">
-              <h2 className="text-xl font-medium text-gray-700 mb-2">Current API Key</h2>
-              <div className="flex items-center bg-gray-100 p-4 rounded-md">
-                {isLoadingApiKey ? (
-                  <p className="text-gray-500 mt-2">Loading API key...</p>
-                ) : apiKey === "" ? (
-                  <p className="text-red-600 mt-2">No API key found. Please generate one.</p>
-                ) : (
-                  <span className="flex-1 text-gray-800 break-all">{apiKey}</span>
-                )}
-                {!isLoadingApiKey && apiKey !== "" && (
-                  <button
-                    onClick={handleCopyAPIKey}
-                    className="ml-4 bg-gray-300 hover:bg-gray-400 text-gray-800 px-3 py-2 rounded-md transition duration-200"
-                  >
-                    Copy
-                  </button>
-                )}
-              </div>
-
-              {copySuccess && (
-                <p
-                  className={`mt-2 ${
-                    copySuccess.includes("Failed") ? "text-red-500" : "text-green-500"
-                  }`}
-                >
-                  {copySuccess}
+        <div className="w-full max-w-4xl">
+          {/* Subscription Status */}
+          <section className="mb-8">
+            <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
+              <h2 className="text-xl font-medium text-gray-800 mb-4">Subscription Status</h2>
+              {isLoadingUserSubscription ? (
+                <p className="text-gray-500">Loading subscription status...</p>
+              ) : userSubscription ? (
+                <p className="text-gray-700 text-base">
+                  You have an active subscription:{" "}
+                  <span className="font-medium">{userSubscription}</span>
+                </p>
+              ) : (
+                <p className="text-gray-700 text-base">
+                  You do not have an active subscription. Please purchase one to generate API keys.
                 </p>
               )}
-            </div>
-
-            {/* Generate API Key */}
-            <div className="mb-6">
               <button
-                onClick={handleGenerateAPIKey}
-                className="w-full bg-gray-800 hover:bg-gray-700 text-white px-4 py-3 rounded-md transition duration-200"
+                onClick={() => router.push("/subscription")}
+                className="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-md font-medium rounded-md text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800"
               >
-                Generate New API Key
+                {userSubscription ? "Manage Subscription" : "Purchase Subscription"}
               </button>
             </div>
-          </>
-        )}
-      </div>
+          </section>
+
+          {/* API Key Section */}
+          {userSubscription && (
+            <section className="mb-8">
+              <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
+                <h2 className="text-xl font-medium text-gray-800 mb-4">Your API Key</h2>
+                {isLoadingApiKey ? (
+                  <p className="text-gray-500">Loading API key...</p>
+                ) : apiKey === "" ? (
+                  <p className="text-gray-700">No API key found. Please generate one.</p>
+                ) : (
+                  <div className="flex items-center bg-white border border-gray-300 rounded-md p-2">
+                    <span className="flex-1 text-gray-800 break-all font-mono text-sm">
+                      {apiKey}
+                    </span>
+                    <button
+                      onClick={handleCopyAPIKey}
+                      className="ml-4 inline-flex items-center px-3 py-1.5 border border-gray-300 text-md leading-4 font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50"
+                    >
+                      Copy
+                    </button>
+                  </div>
+                )}
+                {copySuccess && (
+                  <p
+                    className={`mt-2 text-sm ${
+                      copySuccess.includes("Failed") ? "text-red-500" : "text-green-500"
+                    }`}
+                  >
+                    {copySuccess}
+                  </p>
+                )}
+                {/* Generate API Key Button */}
+                <button
+                  onClick={() => setShowModal(true)}
+                  className="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-md font-medium rounded-md text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800"
+                >
+                  Generate New API Key
+                </button>
+              </div>
+            </section>
+          )}
+        </div>
+      </main>
+
+      {/* Confirmation Modal */}
+      {showModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 px-4">
+          <div className="bg-white rounded-lg p-6 max-w-sm w-full">
+            <h3 className="text-lg font-medium text-gray-900 mb-4">Confirm API Key Regeneration</h3>
+            <p className="text-gray-700 mb-6">
+              Generating a new API key will{" "}
+              <span className="font-semibold">revoke your previous key</span>. Do you wish to
+              continue?
+            </p>
+            <div className="flex justify-end gap-3">
+              <button
+                onClick={() => setShowModal(false)}
+                className="px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-900 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleGenerateAPIKey}
+                className="px-4 py-2 bg-red-600 text- font-medium text-white rounded-md hover:bg-red-500 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
+              >
+                Confirm
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Footer */}
     </div>
   );
 }
