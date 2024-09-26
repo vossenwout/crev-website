@@ -24,6 +24,7 @@ export default function APIKey() {
   const [copySuccess, setCopySuccess] = useState("");
   const [showModal, setShowModal] = useState(false);
 
+  console.log("User", user);
   // Fetch subscription and API key on component mount
   useEffect(() => {
     if (user) {
@@ -75,7 +76,7 @@ export default function APIKey() {
 
   return (
     <div className="p-3 min-h-screen font-[family-name:var(--font-geist-sans)]">
-      <div className="flex justify-between border-b-gray-100 pb-2 border-b-2 h-14">
+      <div className="pl-2 pr-2 flex justify-between border-b-gray-100 pb-2 border-b-2 h-14">
         <LogoButton title="CREV" href="/home" />
         <div className="flex gap-4">
           <NavigationButton title="Docs" href="/docs" active={false} />
@@ -148,7 +149,7 @@ export default function APIKey() {
                 {/* Generate API Key Button */}
                 <button
                   onClick={() => setShowModal(true)}
-                  className="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-md font-medium rounded-md text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800"
+                  className="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-md font-medium rounded-md text-black bg-gray-200 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800"
                 >
                   Generate New API Key
                 </button>

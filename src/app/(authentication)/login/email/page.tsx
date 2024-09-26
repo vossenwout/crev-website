@@ -12,13 +12,17 @@ export default function EmailLoginPage() {
 
   useEffect(() => {
     if (user) {
-      router.push("/home");
+      if (user.emailVerified) {
+        router.push("/home");
+      } else {
+        router.push("/email-verification");
+      }
     }
   }, [user]);
 
   return (
     <div className="p-3 min-h-screen font-[family-name:var(--font-geist-sans)]">
-      <div className="flex justify-between border-b-gray-100 pb-2 border-b-2 h-14">
+      <div className="pl-2 pr-2 flex justify-between border-b-gray-100 pb-2 border-b-2 h-14">
         <div className="flex justify-center items-center gap-10">
           <h1
             className="text-3xl font-extrabold cursor-pointer hover:underline"
@@ -31,11 +35,7 @@ export default function EmailLoginPage() {
       {!loading && !user && (
         <div className="flex flex-col items-center justify-center pt-5">
           <h1 className="text-4xl font-bold mb-4 pb-5">Continue with Email</h1>
-          <EmailAuthForm
-            onSuccess={() => {
-              router.push("/home");
-            }}
-          />
+          <EmailAuthForm />
         </div>
       )}
     </div>

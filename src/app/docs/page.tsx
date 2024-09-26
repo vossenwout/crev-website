@@ -21,16 +21,16 @@ export default function Docs() {
     <div className=" p-3 min-h-screen font-[family-name:var(--font-geist-sans)]  ">
       {/* Header */}
       {user ? (
-        <div className="flex justify-between border-b-gray-100 pb-2 mb-4 border-b-2  h-14">
+        <div className="pl-2 pr-2 flex justify-between border-b-gray-100 pb-2 border-b-2 h-14">
           <LogoButton title="CREV" href="/home" />
           <div className="flex gap-4">
             <NavigationButton title="Docs" href="/docs" active={true} />
-            <NavigationButton title="Code Review API Key" href="/api-key" active={false} />
+            <NavigationButton title="API Key" href="/api-key" active={false} />
             <ProfileButton />
           </div>
         </div>
       ) : (
-        <div className="flex justify-between border-b-gray-100 pb-2 mb-4 border-b-2  h-14">
+        <div className="pl-2 pr-2 flex justify-between border-b-gray-100 pb-2 border-b-2 h-14">
           <LogoButton title="CREV" href="/" />
           <div className="flex gap-4">
             <NavigationButton title="Docs" href="/docs" active={false} />

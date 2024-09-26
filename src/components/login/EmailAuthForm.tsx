@@ -5,127 +5,155 @@ import { auth } from "@/firebase/auth";
 import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
-  fetchSignInMethodsForEmail,
+  sendPasswordResetEmail,
+  sendEmailVerification,
 } from "firebase/auth";
 
-interface EmailAuthFormProps {
-  onSuccess: () => void;
-}
-
-export default function EmailAuthForm({ onSuccess }: EmailAuthFormProps) {
+export default function EmailAuthForm() {
+  const [currentStep, setCurrentStep] = useState<
+    "selection" | "signIn" | "signUp" | "forgotPassword"
+  >("selection");
   const [email, setEmail] = useState("");
-  const [step, setStep] = useState(1); // Step 1: Enter email, Step 2: Enter password
-  const [isExistingUser, setIsExistingUser] = useState(false);
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
-  const handleEmailSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  const handleAuth = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setErrorMessage("");
+    setSuccessMessage(""); // Clear any existing success messages
 
     try {
-      // Check if the email is associated with an existing account
-      // !! This requires Email Enumeration protection to be disabled in Firebase Auth settings !!
-      const signInMethods = await fetchSignInMethodsForEmail(auth, email);
-
-      if (signInMethods.length > 0) {
-        setIsExistingUser(true);
-      } else {
-        setIsExistingUser(false);
+      if (currentStep === "signIn") {
+        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        await sendEmailVerification(userCredential.user);
+      } else if (currentStep === "signUp") {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        await sendEmailVerification(userCredential.user);
+      } else if (currentStep === "forgotPassword") {
+        await sendPasswordResetEmail(auth, email);
+        setSuccessMessage(
+          "A password reset email has been sent to your email address. Please checks spam folder."
+        );
+        setCurrentStep("signIn");
       }
-
-      setStep(2); // Proceed to the password entry step
-    } catch (error) {
-      if (error instanceof Error) {
-        setErrorMessage(error.message);
-      } else {
-        setErrorMessage("An unknown error occurred.");
-      }
-    }
-  };
-
-  const handlePasswordSubmit = async (e: { preventDefault: () => void }) => {
-    e.preventDefault();
-    setErrorMessage("");
-
-    try {
-      if (isExistingUser) {
-        // Sign in the existing user
-        await signInWithEmailAndPassword(auth, email, password);
-      } else {
-        // Create a new user account
-        await createUserWithEmailAndPassword(auth, email, password);
-      }
-      if (onSuccess) {
-        onSuccess();
-      }
-    } catch (error) {
-      if (error instanceof Error && "code" in error) {
-        if (error.code === "auth/wrong-password") {
-          setErrorMessage("Incorrect password. Please try again.");
-        } else if (error.code === "auth/weak-password") {
+    } catch (error: any) {
+      // Clear any existing success messages when an error occurs
+      setSuccessMessage("");
+      switch (error.code) {
+        case "auth/wrong-password":
+        case "auth/user-not-found":
+          setErrorMessage("Incorrect email or password.");
+          break;
+        case "auth/weak-password":
           setErrorMessage("Password should be at least 6 characters.");
-        } else {
-          setErrorMessage(error.message);
-        }
-      } else {
-        setErrorMessage("An unknown error occurred.");
+          break;
+        case "auth/too-many-requests":
+          setErrorMessage("Too many attempts. Please try again later.");
+          break;
+        case "auth/invalid-email":
+          setErrorMessage("Invalid email address.");
+          break;
+        default:
+          setErrorMessage("An error occurred. Please try again.");
+          break;
       }
     }
   };
+
+  const renderSelection = () => (
+    <div className="flex flex-col items-center gap-4">
+      <h2 className="text-2xl font-semibold">Welcome</h2>
+      <p className="text-gray-600">Please choose an option to continue:</p>
+      <div className="flex flex-col gap-2 w-72">
+        <button
+          onClick={() => {
+            setCurrentStep("signIn");
+            setErrorMessage("");
+            setSuccessMessage("");
+          }}
+          className="bg-black text-white px-4 py-2 rounded-md hover:bg-gray-800 focus:outline-none"
+        >
+          Sign In
+        </button>
+        <button
+          onClick={() => {
+            setCurrentStep("signUp");
+            setErrorMessage("");
+            setSuccessMessage("");
+          }}
+          className="bg-gray-100 text-black px-4 py-2 rounded-md hover:bg-gray-200 focus:outline-none"
+        >
+          Sign Up
+        </button>
+        <button
+          onClick={() => {
+            setCurrentStep("forgotPassword");
+            setErrorMessage("");
+            setSuccessMessage("");
+          }}
+          className="text-blue-600 hover:underline focus:outline-none"
+        >
+          Forgot Password?
+        </button>
+      </div>
+    </div>
+  );
+
+  const renderForm = () => (
+    <form onSubmit={handleAuth} className="w-full flex flex-col items-center gap-4">
+      <h2 className="text-2xl font-semibold">
+        {currentStep === "signIn" && "Sign In"}
+        {currentStep === "signUp" && "Create Account"}
+        {currentStep === "forgotPassword" && "Reset Password"}
+      </h2>
+      <input
+        type="email"
+        placeholder="Email Address"
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        required
+        className="w-72 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black"
+      />
+      {(currentStep === "signIn" || currentStep === "signUp") && (
+        <input
+          type="password"
+          placeholder="Password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          required
+          className="w-72 px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-black"
+        />
+      )}
+      <button
+        type="submit"
+        className="bg-black text-white w-72 px-3 py-2 rounded-md hover:bg-gray-800 focus:outline-none"
+      >
+        {currentStep === "signIn" && "Sign In"}
+        {currentStep === "signUp" && "Sign Up"}
+        {currentStep === "forgotPassword" && "Send Reset Email"}
+      </button>
+      <button
+        type="button"
+        onClick={() => {
+          setCurrentStep("selection");
+          setErrorMessage("");
+          setSuccessMessage("");
+        }}
+        className="text-blue-600 hover:underline focus:outline-none mt-2"
+      >
+        Back
+      </button>
+    </form>
+  );
 
   return (
-    <div className="flex flex-col items-center justify-center gap-4">
-      {step === 1 && (
-        <form
-          onSubmit={handleEmailSubmit}
-          className="w-full flex flex-col items-center gap-4"
-        >
-          <input
-            type="email"
-            placeholder="Enter your email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-            className="w-72 px-2 py-2 border border-gray-200 rounded-md"
-          />
-          <button
-            type="submit"
-            className="bg-black text-white w-72 px-2 py-2 rounded-md hover:bg-gray-800 focus:outline-none"
-          >
-            Continue
-          </button>
-        </form>
-      )}
-
-      {step === 2 && (
-        <form
-          onSubmit={handlePasswordSubmit}
-          className="w-full flex flex-col items-center gap-4"
-        >
-          <p className="text-center">
-            {isExistingUser
-              ? "Welcome back! Please enter your password."
-              : "Create a new account. Please set a password."}
-          </p>
-          <input
-            type="password"
-            placeholder="Enter your password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            required
-            className="w-72 px-2 py-2 border border-gray-200 rounded-md"
-          />
-          <button
-            type="submit"
-            className="bg-black text-white w-72 px-2 py-2 rounded-md hover:bg-gray-800 focus:outline-none"
-          >
-            {isExistingUser ? "Sign In" : "Sign Up"}
-          </button>
-        </form>
-      )}
-
-      {errorMessage && <p className="text-red-500">Error: {errorMessage}</p>}
+    <div className="flex flex-col items-center justify-center w-full ">
+      <div className="bg-white p-8 rounded-md shadow-md w-full max-w-md">
+        {currentStep === "selection" ? renderSelection() : renderForm()}
+        {errorMessage && <p className="text-red-500 text-center mt-4">{errorMessage}</p>}
+        {successMessage && <p className="text-green-500 text-center mt-4">{successMessage}</p>}
+      </div>
     </div>
   );
 }

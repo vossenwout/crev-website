@@ -22,7 +22,7 @@ export default function SubscriptionCard(props: SubscriptionCardProps) {
         </div>
       )}
       {props.highlight && (
-        <div className="px-6 py-3 bg-black text-white text-sm font-semibold uppercase text-center">
+        <div className="px-6 py-3 bg-gray-200 text-black text-sm font-semibold uppercase text-center">
           {props.highlightText}
         </div>
       )}

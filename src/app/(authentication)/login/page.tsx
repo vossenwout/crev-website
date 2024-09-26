@@ -12,13 +12,17 @@ export default function LoginPage() {
 
   useEffect(() => {
     if (user) {
-      router.push("/home");
+      if (user.emailVerified) {
+        router.push("/home");
+      } else {
+        router.push("/email-verification");
+      }
     }
   }, [user]);
 
   return (
     <div className=" p-3 min-h-screen font-[family-name:var(--font-geist-sans)]  ">
-      <div className="flex justify-between border-b-gray-100 pb-2 border-b-2 h-14">
+      <div className="pl-2 pr-2 flex justify-between border-b-gray-100 pb-2 border-b-2 h-14">
         <LogoButton title="CREV" href="/" />
       </div>
       {!loading && !user && (

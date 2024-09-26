@@ -16,8 +16,7 @@ export default function Pricing() {
       price: "$" + plans.hobby.price,
       features: [
         plans.hobby.usageLimits.maxDailyReviews + " Daily AI Code Reviews",
-        plans.hobby.usageLimits.maxInputTokens +
-          "k Input Tokens per Review Limit",
+        plans.hobby.usageLimits.maxInputTokens + "k Input Tokens Limit / Review ",
       ],
       buttonText: "Get Started",
       buttonAction: () => router.push("/login"),
@@ -27,21 +26,20 @@ export default function Pricing() {
       price: "$" + plans.premium.price,
       features: [
         plans.premium.usageLimits.maxDailyReviews + " Daily AI Code Reviews",
-        plans.premium.usageLimits.maxInputTokens +
-          "k Input Tokens per Review Limit",
+        plans.premium.usageLimits.maxInputTokens + "k Input Tokens Limit / Review",
       ],
       buttonText: "Get Started",
       buttonAction: () => router.push("/login"),
-      popular: true, // Highlight this plan
+      highlight: true, // Highlight this plan
+      highlightText: "Most Popular",
     },
     {
       title: plans.pro.name,
       price: "$" + plans.pro.price,
       features: [
         plans.pro.usageLimits.maxDailyReviews + " Daily AI Code Reviews",
-        plans.pro.usageLimits.maxInputTokens +
-          "k Input Tokens per Review Limit",
-        "(COMING SOON) Advanced Reasoning Model: GPT-o1-preview  ",
+        plans.pro.usageLimits.maxInputTokens + "k Input Tokens Limit / Review",
+        "Advanced Model: GPT-o1-preview  (COMING SOON) ",
       ],
       buttonText: "Get Started",
       buttonAction: () => router.push("/login"),
@@ -50,7 +48,7 @@ export default function Pricing() {
 
   return (
     <div className=" p-3 min-h-screen font-[family-name:var(--font-geist-sans)]  ">
-      <div className="flex justify-between border-b-gray-100 pb-2 mb-4 border-b-2  h-14">
+      <div className="pl-2 pr-2 flex justify-between border-b-gray-100 pb-2 border-b-2 h-14">
         <LogoButton title="CREV" href="/" />
         <div className="flex gap-4">
           <NavigationButton title="Docs" href="/docs" active={false} />
@@ -65,12 +63,11 @@ export default function Pricing() {
       </div>
 
       {/* Bundling and Review Info */}
-      <div className="text-center max-w-3xl mx-auto mb-8">
-        <p className="text-lg text-gray-700">
-          Bundling your code with the <strong>crev bundle</strong> command is
-          completely free! However, to run the <strong>crev review</strong>{" "}
-          command and let an expert coding AI review your code you can choose
-          one of the following plans.
+      <div className="text-center max-w-3xl mx-auto mt-8 mb-8">
+        <p className="text-md text-gray-700">
+          Bundling your code with the <strong>crev bundle</strong> command is completely free!
+          However, to run the <strong>crev review</strong> command and let an expert coding AI
+          review your code you can choose one of the following plans.
         </p>
       </div>
 
@@ -79,23 +76,6 @@ export default function Pricing() {
         {pricingPlans.map((plan, index) => (
           <SubscriptionCard key={index} {...plan} />
         ))}
-      </div>
-
-      {/* Footer */}
-      <div className="flex flex-col items-center border-t border-gray-300 p-6 mt-12">
-        <a
-          href="https://github.com/vossenwout/crev"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="mt-2"
-        >
-          <img
-            src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
-            alt="GitHub logo"
-            className="w-10 h-10"
-          />
-        </a>
-        <span className="mt-4">Contact: vossen.w@hotmail.com</span>
       </div>
     </div>
   );

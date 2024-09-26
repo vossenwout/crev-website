@@ -42,7 +42,7 @@ export default function Subscription() {
       price: "$" + plans.hobby.price,
       features: [
         plans.hobby.usageLimits.maxDailyReviews + " Daily AI Reviews",
-        plans.hobby.usageLimits.maxInputTokens + "k Input Tokens Limit",
+        plans.hobby.usageLimits.maxInputTokens + "k Input Tokens Limit / Review",
       ],
       buttonText: "Subscribe",
       buttonAction: () => user?.uid && redirectToCheckout(user.uid, plans.hobby.stripePriceId),
@@ -52,7 +52,7 @@ export default function Subscription() {
       price: "$" + plans.premium.price,
       features: [
         plans.premium.usageLimits.maxDailyReviews + " Daily AI Reviews",
-        plans.premium.usageLimits.maxInputTokens + "k Input Tokens Limit",
+        plans.premium.usageLimits.maxInputTokens + "k Input Tokens Limit / Review",
       ],
       buttonText: "Subscribe",
       buttonAction: () => user?.uid && redirectToCheckout(user.uid, plans.premium.stripePriceId),
@@ -64,8 +64,8 @@ export default function Subscription() {
       price: "$" + plans.pro.price,
       features: [
         plans.pro.usageLimits.maxDailyReviews + " Daily AI Reviews",
-        plans.pro.usageLimits.maxInputTokens + "k Input Tokens Limit",
-        "(COMING SOON) Advanced Reasoning Model: GPT-o1-preview  ",
+        plans.pro.usageLimits.maxInputTokens + "k Input Tokens Limit / Review",
+        "Advanced Reasoning Model: GPT-o1-preview (COMING SOON)",
       ],
       buttonText: "Subscribe",
       buttonAction: () => user?.uid && redirectToCheckout(user.uid, plans.pro.stripePriceId),
@@ -78,7 +78,7 @@ export default function Subscription() {
       price: "$" + plans.hobby.price,
       features: [
         plans.hobby.usageLimits.maxDailyReviews + " Daily AI Reviews",
-        plans.hobby.usageLimits.maxInputTokens + "k Input Tokens Limit",
+        plans.hobby.usageLimits.maxInputTokens + "k Input Tokens Limit / Review",
       ],
       buttonText: "Update plan",
       buttonAction: () => redirectToPortal(),
@@ -90,7 +90,7 @@ export default function Subscription() {
       price: "$" + plans.premium.price,
       features: [
         plans.premium.usageLimits.maxDailyReviews + " Daily AI Reviews",
-        plans.premium.usageLimits.maxInputTokens + "k Input Tokens Limit",
+        plans.premium.usageLimits.maxInputTokens + "k Input Tokens Limit / Review",
       ],
       buttonText: "Update plan",
       buttonAction: () => redirectToPortal(),
@@ -102,8 +102,8 @@ export default function Subscription() {
       price: "$" + plans.pro.price,
       features: [
         plans.pro.usageLimits.maxDailyReviews + " Daily AI Reviews",
-        plans.pro.usageLimits.maxInputTokens + "k Input Tokens Limit",
-        "(COMING SOON) Advanced Reasoning Model: GPT-o1-preview  ",
+        plans.pro.usageLimits.maxInputTokens + "k Input Tokens Limit / Review",
+        "Advanced Reasoning Model: GPT-o1-preview (COMING SOON)",
       ],
       buttonText: "Update plan",
       buttonAction: () => redirectToPortal(),
@@ -123,11 +123,11 @@ export default function Subscription() {
     }
     return (
       <div className="p-3 min-h-screen font-[family-name:var(--font-geist-sans)]">
-        <div className="flex justify-between border-b-gray-100 pb-2 border-b-2 h-14">
+        <div className="pl-2 pr-2 flex justify-between border-b-gray-100 pb-2 border-b-2 h-14">
           <LogoButton title="CREV" href="/home" />
           <div className="flex gap-4">
             <NavigationButton title="Docs" href="/docs" active={false} />
-            <NavigationButton title="Code Review API Key" href="/api-key" active={false} />
+            <NavigationButton title="API Key" href="/api-key" active={false} />
             <ProfileButton />
           </div>
         </div>
@@ -152,11 +152,11 @@ export default function Subscription() {
       }
       return (
         <div className="p-3 min-h-screen font-[family-name:var(--font-geist-sans)]">
-          <div className="flex justify-between border-b-gray-100 pb-2 border-b-2 h-14">
+          <div className="pl-2 pr-2 flex justify-between border-b-gray-100 pb-2 border-b-2 h-14">
             <LogoButton title="CREV" href="/home" />
             <div className="flex gap-4">
               <NavigationButton title="Docs" href="/docs" active={false} />
-              <NavigationButton title="Code Review API Key" href="/api-key" active={false} />
+              <NavigationButton title="API Key" href="/api-key" active={false} />
               <ProfileButton />
             </div>
           </div>
@@ -173,11 +173,11 @@ export default function Subscription() {
       if (currentSubscriptionId) {
         return (
           <div className="p-3 min-h-screen font-[family-name:var(--font-geist-sans)]">
-            <div className="flex justify-between border-b-gray-100 pb-2 border-b-2 h-14">
+            <div className="pl-2 pr-2 flex justify-between border-b-gray-100 pb-2 border-b-2 h-14">
               <LogoButton title="CREV" href="/home" />
               <div className="flex gap-4">
                 <NavigationButton title="Docs" href="/docs" active={false} />
-                <NavigationButton title="Code Review API Key" href="/api-key" active={false} />
+                <NavigationButton title="API Key" href="/api-key" active={false} />
                 <ProfileButton />
               </div>
             </div>
@@ -203,11 +203,11 @@ export default function Subscription() {
         }
         return (
           <div className="p-3 min-h-screen font-[family-name:var(--font-geist-sans)]">
-            <div className="flex justify-between border-b-gray-100 pb-2 border-b-2 h-14">
+            <div className="pl-2 pr-2 flex justify-between border-b-gray-100 pb-2 border-b-2 h-14">
               <LogoButton title="CREV" href="/home" />
               <div className="flex gap-4">
                 <NavigationButton title="Docs" href="/docs" active={false} />
-                <NavigationButton title="Code Review API Key" href="/api-key" active={false} />
+                <NavigationButton title="API Key" href="/api-key" active={false} />
                 <ProfileButton />
               </div>
             </div>

@@ -8,11 +8,11 @@ import Image from "next/image";
 export default function Home() {
   return (
     <div className="p-3 min-h-screen font-[family-name:var(--font-geist-sans)]">
-      <div className="flex justify-between border-b-gray-100 pb-2 border-b-2 h-14">
+      <div className="pl-2 pr-2 flex justify-between border-b-gray-100 pb-2 border-b-2 h-14">
         <LogoButton title="CREV" href="/home" />
         <div className="flex gap-4">
           <NavigationButton title="Docs" href="/docs" active={false} />
-          <NavigationButton title="Code Review API Key" href="/api-key" active={false} />
+          <NavigationButton title="API Key" href="/api-key" active={false} />
           <ProfileButton />
         </div>
       </div>
@@ -55,7 +55,7 @@ export default function Home() {
             height={70}
           />
         </a>
-        <p className="text-gray-600 mb-2">View source code on github</p>
+        <p className="text-gray-600 mb-2">View source code</p>
       </div>
     </div>
   );
