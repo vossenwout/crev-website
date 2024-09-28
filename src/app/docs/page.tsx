@@ -7,6 +7,7 @@ import NavigationButton from "@/components/topbar/NavigationButton";
 import LogoButton from "@/components/topbar/LogoButton";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Image from "next/image";
+import LandingPageHeader from "@/components/topbar/LandingPageHeader";
 
 export default function Docs() {
   const router = useRouter();
@@ -31,19 +32,7 @@ export default function Docs() {
           </div>
         </div>
       ) : (
-        <div className="pl-2 pr-2 flex justify-between border-b-gray-100 pb-2 border-b-2 h-14">
-          <LogoButton title="CREV" href="/" />
-          <div className="flex gap-4">
-            <NavigationButton title="Docs" href="/docs" active={false} />
-            <NavigationButton title="Pricing" href="/pricing" active={false} />
-            <button
-              onClick={() => router.push("login")}
-              className="text-white bg-black hover:bg-gray-800 focus:outline-none rounded-lg py-2 px-4"
-            >
-              Sign in
-            </button>
-          </div>
-        </div>
+        <LandingPageHeader />
       )}
 
       {/* Main Content */}

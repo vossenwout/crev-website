@@ -37,7 +37,9 @@ export default function LoginPage() {
               <Image
                 src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg"
                 alt="Google logo"
-                className="w-6 h-6 mr-2"
+                className="mr-2"
+                width="24"
+                height="24"
               />
               Continue with Google
             </button>
@@ -48,7 +50,9 @@ export default function LoginPage() {
               <Image
                 src="https://upload.wikimedia.org/wikipedia/commons/3/3d/Envelope_font_awesome.svg"
                 alt="Email logo"
-                className="w-6 h-6 mr-2"
+                className="mr-2"
+                width="24"
+                height="24"
               />
               Continue with Email
             </button>

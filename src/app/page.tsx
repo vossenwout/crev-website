@@ -2,29 +2,18 @@
 
 import { useRouter } from "next/navigation";
 import Image from "next/image";
-import LogoButton from "@/components/topbar/LogoButton";
-import NavigationButton from "@/components/topbar/NavigationButton";
+import LandingPageHeader from "@/components/topbar/LandingPageHeader";
 
 export default function Home() {
   const router = useRouter();
+
   return (
-    <div className=" p-3 min-h-screen font-[family-name:var(--font-geist-sans)]  ">
-      <div className="pl-2 pr-2 flex justify-between border-b-gray-100 pb-2 border-b-2 h-14">
-        <LogoButton title="CREV" href="/" />
-        <div className="flex gap-4">
-          <NavigationButton title="Docs" href="/docs" active={false} />
-          <NavigationButton title="Pricing" href="/pricing" active={false} />
-          <button
-            onClick={() => router.push("/login")}
-            className="text-white bg-black hover:bg-gray-800 focus:outline-none rounded-lg py-2 px-4"
-          >
-            Sign in
-          </button>
-        </div>
-      </div>
+    <div className="p-3 min-h-screen font-[family-name:var(--font-geist-sans)] relative">
+      {/* Header */}
+      <LandingPageHeader />
 
       {/* Main Content */}
-      <main className="flex flex-col items-center justify-center px-6 py-8 space-y-12">
+      <main className="flex flex-col items-center justify-center px-6 py-8 space-y-12 ">
         {/* Hero Section */}
         <section className="text-center max-w-2xl">
           <h1 className="text-4xl font-bold mb-4">CLI Tool For AI Code Reviews</h1>
@@ -35,7 +24,7 @@ export default function Home() {
 
         {/* Features Section */}
         <section className="w-full max-w-4xl space-y-16">
-          {/* Feature 1: Bundle Your Codebase */}
+          {/* Feature 1 */}
           <div className="flex flex-col md:flex-row items-center bg-gray-100 p-8 rounded-lg shadow-md">
             {/* Text Content */}
             <div className="md:w-1/2">
@@ -61,7 +50,7 @@ export default function Home() {
             </div>
           </div>
 
-          {/* Feature 2: AI-Powered Code Reviews */}
+          {/* Feature 2 */}
           <div className="flex flex-col items-start bg-gray-100 p-8 rounded-lg shadow-md">
             <h2 className="text-2xl font-semibold mb-3">AI-Powered Code Reviews</h2>
             <p className="text-gray-600 mb-6">
