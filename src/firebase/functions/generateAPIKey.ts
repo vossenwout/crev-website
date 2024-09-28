@@ -12,7 +12,10 @@ interface ApiError {
 }
 
 export const generateApiKey = async (): Promise<ApiKeyResponse> => {
-  const functionRef = httpsCallable<any, ApiKeyResponse>(functions, "generateApiKey");
+  const functionRef = httpsCallable<any, ApiKeyResponse>(
+    functions,
+    "generateApiKey",
+  );
 
   try {
     const { data } = await functionRef();
@@ -24,7 +27,9 @@ export const generateApiKey = async (): Promise<ApiKeyResponse> => {
         code: error.code,
         message: error.message,
       };
-      console.error(`Error Code: ${apiError.code}, Message: ${apiError.message}`);
+      console.error(
+        `Error Code: ${apiError.code}, Message: ${apiError.message}`,
+      );
       throw apiError;
     } else {
       throw new Error("An unexpected error occurred.");

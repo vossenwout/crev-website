@@ -15,11 +15,9 @@ You can start editing the page by modifying `app/page.tsx`. The page auto-update
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-
 ## Static build
 
-1. in next.config.mjs set   output: "export",
+1. in next.config.mjs set output: "export",
 2. run `npm run build`
 3. run `cd out`
 4. run `http-server`
-

@@ -25,15 +25,23 @@ export default function EmailAuthForm() {
 
     try {
       if (currentStep === "signIn") {
-        const userCredential = await signInWithEmailAndPassword(auth, email, password);
+        const userCredential = await signInWithEmailAndPassword(
+          auth,
+          email,
+          password,
+        );
         await sendEmailVerification(userCredential.user);
       } else if (currentStep === "signUp") {
-        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const userCredential = await createUserWithEmailAndPassword(
+          auth,
+          email,
+          password,
+        );
         await sendEmailVerification(userCredential.user);
       } else if (currentStep === "forgotPassword") {
         await sendPasswordResetEmail(auth, email);
         setSuccessMessage(
-          "A password reset email has been sent to your email address. Please checks spam folder."
+          "A password reset email has been sent to your email address. Please checks spam folder.",
         );
         setCurrentStep("signIn");
       }
@@ -101,7 +109,10 @@ export default function EmailAuthForm() {
   );
 
   const renderForm = () => (
-    <form onSubmit={handleAuth} className="w-full flex flex-col items-center gap-4">
+    <form
+      onSubmit={handleAuth}
+      className="w-full flex flex-col items-center gap-4"
+    >
       <h2 className="text-2xl font-semibold">
         {currentStep === "signIn" && "Sign In"}
         {currentStep === "signUp" && "Create Account"}
@@ -151,8 +162,12 @@ export default function EmailAuthForm() {
     <div className="flex flex-col items-center justify-center w-full ">
       <div className="bg-white p-8 rounded-md shadow-md w-full max-w-md">
         {currentStep === "selection" ? renderSelection() : renderForm()}
-        {errorMessage && <p className="text-red-500 text-center mt-4">{errorMessage}</p>}
-        {successMessage && <p className="text-green-500 text-center mt-4">{successMessage}</p>}
+        {errorMessage && (
+          <p className="text-red-500 text-center mt-4">{errorMessage}</p>
+        )}
+        {successMessage && (
+          <p className="text-green-500 text-center mt-4">{successMessage}</p>
+        )}
       </div>
     </div>
   );

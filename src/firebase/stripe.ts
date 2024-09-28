@@ -1,4 +1,8 @@
-import { SubscriptionID, SubscriptionPlan, SubscriptionPlans } from "@/data/subscriptions";
+import {
+  SubscriptionID,
+  SubscriptionPlan,
+  SubscriptionPlans,
+} from "@/data/subscriptions";
 import { db, functions } from "./config";
 import {
   collection,
@@ -13,11 +17,14 @@ import {
 import { httpsCallable } from "firebase/functions";
 
 export const createCheckoutSession = async (uid: string, priceId: string) => {
-  const checkoutSessionRef = await addDoc(collection(db, "customers", uid, "checkout_sessions"), {
-    price: priceId,
-    success_url: process.env.NEXT_PUBLIC_CHECKOUT_SUCCESS_URL,
-    cancel_url: process.env.NEXT_PUBLIC_CHECKOUT_CANCEL_URL,
-  });
+  const checkoutSessionRef = await addDoc(
+    collection(db, "customers", uid, "checkout_sessions"),
+    {
+      price: priceId,
+      success_url: process.env.NEXT_PUBLIC_CHECKOUT_SUCCESS_URL,
+      cancel_url: process.env.NEXT_PUBLIC_CHECKOUT_CANCEL_URL,
+    },
+  );
   // Wait for the CheckoutSession to get attached by the extension
   onSnapshot(
     doc(db, "customers", uid, "checkout_sessions", checkoutSessionRef.id),
@@ -32,12 +39,15 @@ export const createCheckoutSession = async (uid: string, priceId: string) => {
           alert(`An error occured: ${error.message}`);
         }
       }
-    }
+    },
   );
 };
 
 export const getCustomerPortal = async () => {
-  const functionRef = httpsCallable(functions, "ext-firestore-stripe-payments-createPortalLink");
+  const functionRef = httpsCallable(
+    functions,
+    "ext-firestore-stripe-payments-createPortalLink",
+  );
   const { data } = await functionRef({
     returnUrl: process.env.NEXT_PUBLIC_PORTAL_RETURN_URL,
     locale: "auto",
@@ -46,14 +56,16 @@ export const getCustomerPortal = async () => {
   window.location.assign(portalData.url);
 };
 
-export const getSubscriptionInfo = async (uid: string): Promise<SubscriptionPlan | null> => {
+export const getSubscriptionInfo = async (
+  uid: string,
+): Promise<SubscriptionPlan | null> => {
   try {
     // Reference to the subscriptions collection for the given user
     const collectionRef = collection(db, "customers", uid, "subscriptions");
 
     // Query for subscriptions with "trialing" or "active" status
     const querySnapshot = await getDocs(
-      query(collectionRef, where("status", "in", ["trialing", "active"]))
+      query(collectionRef, where("status", "in", ["trialing", "active"])),
     );
 
     // Extract the subscriptions
@@ -83,15 +95,16 @@ export const getSubscriptionInfo = async (uid: string): Promise<SubscriptionPlan
         } else {
           return { ...subscription, priceAmount: 0, role: subscription.role }; // Default to 0 if price not found
         }
-      })
+      }),
     );
 
     // Sort the subscriptions by priceAmount in descending order (most expensive first)
     const sortedSubscriptions = subscriptionWithPrices.sort(
-      (a, b) => b.priceAmount - a.priceAmount
+      (a, b) => b.priceAmount - a.priceAmount,
     );
 
-    const mostExpensiveSubscriptionRole = sortedSubscriptions[0].role as SubscriptionID;
+    const mostExpensiveSubscriptionRole = sortedSubscriptions[0]
+      .role as SubscriptionID;
 
     // Get the most expensive subscription plan
     // Important role needs to be the subscriptionID

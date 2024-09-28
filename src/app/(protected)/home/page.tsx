@@ -18,10 +18,12 @@ export default function Home() {
       </div>
       {/* Main Content */}
       <main className="flex flex-col items-center justify-center px-8 py-20">
-        <h1 className="text-5xl font-bold text-gray-800 mb-6">Welcome to CREV</h1>
+        <h1 className="text-5xl font-bold text-gray-800 mb-6">
+          Welcome to CREV
+        </h1>
         <p className="text-xl text-gray-600 mb-12 text-center max-w-2xl">
-          Enhance your code quality with our code review cli tool. Get started by exploring the
-          documentation or managing your API keys.
+          Enhance your code quality with our code review cli tool. Get started
+          by exploring the documentation or managing your API keys.
         </p>
 
         <div className="flex gap-6">

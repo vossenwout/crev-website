@@ -16,7 +16,8 @@ export default function Pricing() {
       price: "$" + plans.hobby.price,
       features: [
         plans.hobby.usageLimits.maxDailyReviews + " Daily AI Code Reviews",
-        plans.hobby.usageLimits.maxInputTokens + "k Input Tokens Limit / Review ",
+        plans.hobby.usageLimits.maxInputTokens +
+          "k Input Tokens Limit / Review ",
       ],
       buttonText: "Get Started",
       buttonAction: () => router.push("/login"),
@@ -26,7 +27,8 @@ export default function Pricing() {
       price: "$" + plans.premium.price,
       features: [
         plans.premium.usageLimits.maxDailyReviews + " Daily AI Code Reviews",
-        plans.premium.usageLimits.maxInputTokens + "k Input Tokens Limit / Review",
+        plans.premium.usageLimits.maxInputTokens +
+          "k Input Tokens Limit / Review",
       ],
       buttonText: "Get Started",
       buttonAction: () => router.push("/login"),
@@ -65,9 +67,10 @@ export default function Pricing() {
       {/* Bundling and Review Info */}
       <div className="text-center max-w-3xl mx-auto mt-8 mb-8">
         <p className="text-md text-gray-700">
-          Bundling your code with the <strong>crev bundle</strong> command is completely free!
-          However, to run the <strong>crev review</strong> command and let an expert coding AI
-          review your code you can choose one of the following plans.
+          Bundling your code with the <strong>crev bundle</strong> command is
+          completely free! However, to run the <strong>crev review</strong>{" "}
+          command and let an expert coding AI review your code you can choose
+          one of the following plans.
         </p>
       </div>
 

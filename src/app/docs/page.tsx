@@ -50,17 +50,22 @@ export default function Docs() {
       <main className="mt-10 space-y-12 pl-4 pr-4">
         {/* Explanation Section */}
         <section>
-          <h1 className="text-4xl font-bold text-gray-900 mb-6">What is crev?</h1>
+          <h1 className="text-4xl font-bold text-gray-900 mb-6">
+            What is crev?
+          </h1>
           <p className="text-gray-700 text-md">
-            Crev is a command-line tool that allows you to easily bundle your codebase into a single
-            file so you can share it with an AI. Crev also provides an AI code review service that
-            inspects this bundled file, provides feedback on your code quality and helps you catch
+            Crev is a command-line tool that allows you to easily bundle your
+            codebase into a single file so you can share it with an AI. Crev
+            also provides an AI code review service that inspects this bundled
+            file, provides feedback on your code quality and helps you catch
             bugs early.
           </p>
         </section>
         {/* Installation Section */}
         <section>
-          <h1 className="text-4xl font-bold text-gray-900 mb-6">How to Install</h1>
+          <h1 className="text-4xl font-bold text-gray-900 mb-6">
+            How to Install
+          </h1>
 
           {/* Homebrew Installation */}
           <div className="mb-8">
@@ -145,7 +150,9 @@ export default function Docs() {
             <h3 className="text-xl font-semibold text-gray-800 mt-6 mb-2">
               Windows Installation Script
             </h3>
-            <p className="text-gray-700 mb-2">Invoke this in a PowerShell with admin rights:</p>
+            <p className="text-gray-700 mb-2">
+              Invoke this in a PowerShell with admin rights:
+            </p>
             <pre className="bg-gray-100 border border-gray-300 p-4 rounded-lg text-sm overflow-x-auto">
               Invoke-Expression (Invoke-WebRequest -Uri
               &apos;https://raw.githubusercontent.com/vossenwout/crev/feature/add-install-scripts/scripts/install.ps1&apos;).Content
@@ -163,9 +170,13 @@ export default function Docs() {
               (Optional) Initialize Config
             </h2>
             <p className="text-gray-700 mb-4">
-              Creates a <code className="bg-gray-200 px-1 rounded">.crev-config.yaml</code> file in
-              the current directory, allowing you to configure the Crev tool. This way you
-              don&apos;t have to pass flags every time you run a command.
+              Creates a{" "}
+              <code className="bg-gray-200 px-1 rounded">
+                .crev-config.yaml
+              </code>{" "}
+              file in the current directory, allowing you to configure the Crev
+              tool. This way you don&apos;t have to pass flags every time you
+              run a command.
             </p>
             <pre className="bg-gray-100 border border-gray-300 p-4 rounded-lg text-sm overflow-x-auto">
               crev init
@@ -174,20 +185,24 @@ export default function Docs() {
 
           {/* Bundle Command */}
           <div className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-2">Bundle Your Codebase</h2>
+            <h2 className="text-2xl font-semibold text-gray-800 mb-2">
+              Bundle Your Codebase
+            </h2>
             <p className="text-gray-700 mb-4">
-              This command bundles your entire project, starting from the directory where it&apos;s
-              executed, into a single file named{" "}
-              <code className="bg-gray-200 px-1 rounded">crev-project.txt</code>.
+              This command bundles your entire project, starting from the
+              directory where it&apos;s executed, into a single file named{" "}
+              <code className="bg-gray-200 px-1 rounded">crev-project.txt</code>
+              .
             </p>
 
             <pre className="bg-gray-100 border border-gray-300 p-4 rounded-lg text-sm overflow-x-auto">
               crev bundle
             </pre>
             <p className="text-gray-700 mt-2">
-              <span className="font-semibold text-red-600">Note:</span> By default a lot of common
-              configuration files like (.gitignore, package.json, Dockerfile, ...) and non-text
-              files (.jpeg, .pdf, .gif, ...) are excluded.
+              <span className="font-semibold text-red-600">Note:</span> By
+              default a lot of common configuration files like (.gitignore,
+              package.json, Dockerfile, ...) and non-text files (.jpeg, .pdf,
+              .gif, ...) are excluded.
             </p>
 
             {/* Flags */}
@@ -195,22 +210,22 @@ export default function Docs() {
               <p className="font-semibold text-gray-800 mb-2">Flags:</p>
               <ul className="list-disc list-inside space-y-2">
                 <li>
-                  <span className="font-medium">--ignore-ext</span> - Exclude specific file
-                  extensions.
+                  <span className="font-medium">--ignore-ext</span> - Exclude
+                  specific file extensions.
                   <pre className="bg-gray-100 border border-gray-300 p-4 rounded-lg text-sm mt-2 overflow-x-auto">
                     crev bundle --ignore-ext=.txt,.md
                   </pre>
                 </li>
                 <li>
-                  <span className="font-medium">--ignore-pre</span> - Exclude files or directories
-                  by prefix.
+                  <span className="font-medium">--ignore-pre</span> - Exclude
+                  files or directories by prefix.
                   <pre className="bg-gray-100 border border-gray-300 p-4 rounded-lg text-sm mt-2 overflow-x-auto">
                     crev bundle --ignore-pre=tests,readme
                   </pre>
                 </li>
                 <li>
-                  <span className="font-medium">--include-ext</span> - Only include specified file
-                  extensions.
+                  <span className="font-medium">--include-ext</span> - Only
+                  include specified file extensions.
                   <pre className="bg-gray-100 border border-gray-300 p-4 rounded-lg text-sm mt-2 overflow-x-auto">
                     crev bundle --include-ext=.js,.ts
                   </pre>
@@ -218,18 +233,24 @@ export default function Docs() {
               </ul>
             </div>
             <p className="text-gray-700 mt-2">
-              <span className="font-semibold text-red-600">Note:</span> It can be helpful to set up
-              a <code className="bg-gray-200 px-1 rounded">.crev-config.yaml</code> by running{" "}
-              <strong> crev init</strong> so you don&apos;t have to pass these flags every time.
+              <span className="font-semibold text-red-600">Note:</span> It can
+              be helpful to set up a{" "}
+              <code className="bg-gray-200 px-1 rounded">
+                .crev-config.yaml
+              </code>{" "}
+              by running <strong> crev init</strong> so you don&apos;t have to
+              pass these flags every time.
             </p>
           </div>
 
           {/* Review Command */}
           <div className="mb-8">
-            <h2 className="text-2xl font-semibold text-gray-800 mb-2">Get an AI Code Review</h2>
+            <h2 className="text-2xl font-semibold text-gray-800 mb-2">
+              Get an AI Code Review
+            </h2>
             <p className="text-gray-700 mb-4">
-              Let an AI review your bundled project file. Requires a Crev API key which you can
-              generate{" "}
+              Let an AI review your bundled project file. Requires a Crev API
+              key which you can generate{" "}
               <button
                 className="text-blue-600 hover:underline"
                 onClick={() => router.push("/api-key")}
@@ -246,13 +267,16 @@ export default function Docs() {
 
         {/* API Key Section */}
         <section>
-          <h1 className="text-4xl font-bold text-gray-900 mb-6">How to Use the Crev API Key</h1>
+          <h1 className="text-4xl font-bold text-gray-900 mb-6">
+            How to Use the Crev API Key
+          </h1>
 
           {/* Explanation */}
           <div className="mb-8">
             <p className="text-gray-700 mb-4">
-              To run the <strong>crev review</strong> command and let an expert coding AI review
-              your code, you need to generate a <strong>Crev API key</strong>, which you can do{" "}
+              To run the <strong>crev review</strong> command and let an expert
+              coding AI review your code, you need to generate a{" "}
+              <strong>Crev API key</strong>, which you can do{" "}
               <a
                 href="/api-key"
                 target="_blank"
@@ -264,7 +288,8 @@ export default function Docs() {
               .
             </p>
             <p className="text-gray-700">
-              Afterward, set the API key in your environment using one of the following options:
+              Afterward, set the API key in your environment using one of the
+              following options:
             </p>
           </div>
 
@@ -276,17 +301,24 @@ export default function Docs() {
                 Option 1: Set as Environment Variable (Recommended)
               </h2>
               <p className="text-gray-700 mb-4">
-                Setting the API key as an environment variable ensures you only need to set it once.
+                Setting the API key as an environment variable ensures you only
+                need to set it once.
               </p>
 
               {/* Linux/Mac */}
               <div className="mb-6">
-                <h3 className="text-xl font-medium text-gray-700 mb-2">Linux/Mac</h3>
-                <p className="text-gray-600 mb-2">Add the API key to your shell configuration:</p>
+                <h3 className="text-xl font-medium text-gray-700 mb-2">
+                  Linux/Mac
+                </h3>
+                <p className="text-gray-600 mb-2">
+                  Add the API key to your shell configuration:
+                </p>
                 <pre className="bg-gray-100 border border-gray-300 p-4 rounded-lg text-sm overflow-x-auto">
                   nano ~/.bashrc
                 </pre>
-                <p className="text-gray-600 mt-2 mb-2">If using zsh shell (common on Mac):</p>
+                <p className="text-gray-600 mt-2 mb-2">
+                  If using zsh shell (common on Mac):
+                </p>
                 <pre className="bg-gray-100 border border-gray-300 p-4 rounded-lg text-sm overflow-x-auto">
                   nano ~/.zshrc
                 </pre>
@@ -303,32 +335,45 @@ export default function Docs() {
 
               {/* Windows */}
               <div>
-                <h3 className="text-xl font-medium text-gray-700 mb-2">Windows (PowerShell)</h3>
+                <h3 className="text-xl font-medium text-gray-700 mb-2">
+                  Windows (PowerShell)
+                </h3>
                 <p className="text-gray-600 mb-2">
-                  Set the API key environment variable directly using PowerShell:
+                  Set the API key environment variable directly using
+                  PowerShell:
                 </p>
                 <pre className="bg-gray-100 border border-gray-300 p-4 rounded-lg text-sm overflow-x-auto">
                   [System.Environment]::SetEnvironmentVariable(&quot;CREV_API_KEY&quot;,
                   &quot;REPLACE_WITH_YOUR_API_KEY&quot;, &quot;User&quot;)
                 </pre>
-                <p className="text-gray-600 mt-2">Restart PowerShell to apply the changes.</p>
+                <p className="text-gray-600 mt-2">
+                  Restart PowerShell to apply the changes.
+                </p>
               </div>
             </div>
 
             {/* Option 2: .crev-config.yaml */}
             <div>
               <h2 className="text-2xl font-semibold text-gray-800 mb-4">
-                Option 2: Set in <code className="bg-gray-200 px-1 rounded">.crev-config.yaml</code>
+                Option 2: Set in{" "}
+                <code className="bg-gray-200 px-1 rounded">
+                  .crev-config.yaml
+                </code>
               </h2>
               <p className="text-gray-700 mb-4">
-                After running <strong>crev init</strong>, add the Crev API key under the{" "}
-                <code className="bg-gray-200 px-1 rounded">crev_api_key</code> key in the{" "}
-                <code className="bg-gray-200 px-1 rounded">.crev-config.yaml</code> file.
+                After running <strong>crev init</strong>, add the Crev API key
+                under the{" "}
+                <code className="bg-gray-200 px-1 rounded">crev_api_key</code>{" "}
+                key in the{" "}
+                <code className="bg-gray-200 px-1 rounded">
+                  .crev-config.yaml
+                </code>{" "}
+                file.
               </p>
               <p className="text-gray-700">
-                <span className="font-semibold text-red-600">Note:</span> The downside of this is
-                that you will need to add your API key to the configuration of every project you
-                want to review.
+                <span className="font-semibold text-red-600">Note:</span> The
+                downside of this is that you will need to add your API key to
+                the configuration of every project you want to review.
               </p>
             </div>
           </div>
@@ -348,11 +393,16 @@ export default function Docs() {
                 alt="GitHub Logo"
                 className="w-10 h-10"
               />
-              <span className="text-gray-700 hover:text-gray-900">View on GitHub</span>
+              <span className="text-gray-700 hover:text-gray-900">
+                View on GitHub
+              </span>
             </a>
             <p className="text-gray-600">
               Contact:{" "}
-              <a href="mailto:vossen.w@hotmail.com" className="text-blue-600 hover:underline">
+              <a
+                href="mailto:vossen.w@hotmail.com"
+                className="text-blue-600 hover:underline"
+              >
                 vossen.w@hotmail.com
               </a>
             </p>

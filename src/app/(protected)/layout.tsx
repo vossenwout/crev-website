@@ -5,7 +5,11 @@ import { auth } from "@/firebase/auth";
 import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 
-export default function ProtectLayout({ children }: { children: React.ReactNode }) {
+export default function ProtectLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   const [user, loading] = useAuthState(auth);
   const router = useRouter();
 
