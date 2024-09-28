@@ -7,7 +7,6 @@ import NavigationButton from "@/components/topbar/NavigationButton";
 
 export default function Home() {
   const router = useRouter();
-  // test
   return (
     <div className=" p-3 min-h-screen font-[family-name:var(--font-geist-sans)]  ">
       <div className="pl-2 pr-2 flex justify-between border-b-gray-100 pb-2 border-b-2 h-14">
