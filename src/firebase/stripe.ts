@@ -91,7 +91,6 @@ export const getSubscriptionInfo = async (uid: string): Promise<SubscriptionPlan
       (a, b) => b.priceAmount - a.priceAmount
     );
 
-    console.log("Sorted subscriptions:", sortedSubscriptions);
     const mostExpensiveSubscriptionRole = sortedSubscriptions[0].role as SubscriptionID;
 
     // Get the most expensive subscription plan

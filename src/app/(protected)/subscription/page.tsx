@@ -8,7 +8,6 @@ import { useEffect, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { createCheckoutSession, getCustomerPortal, getSubscriptionInfo } from "@/firebase/stripe";
 import { SubscriptionID } from "@/data/subscriptions";
-import { useRouter } from "next/navigation";
 import { SubscriptionPlans } from "@/data/subscriptions";
 import SubscriptionCard from "@/components/subscriptions/SubscriptionCard";
 
@@ -17,7 +16,6 @@ export default function Subscription() {
   const [stripeLoading, setStripeLoading] = useState(false);
   const [isLoadingUserSubscription, setIsLoadingUserSubscription] = useState(true);
   const [currentSubscriptionId, setCurrentSubscriptionId] = useState<SubscriptionID | null>(null);
-  const router = useRouter();
   const plans = SubscriptionPlans;
 
   useEffect(() => {

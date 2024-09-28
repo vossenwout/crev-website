@@ -46,7 +46,7 @@ export default function EmailVerificationPage() {
       <div className="w-full max-w-md bg-white rounded-lg shadow-lg p-8">
         <h1 className="text-2xl font-semibold text-gray-900">Verify Your Email</h1>
         <p className="mt-4 text-gray-600">
-          We've sent a verification email to the following address:
+          We&apos;ve sent a verification email to the following address:
         </p>
 
         <div className="mt-2 mb-4 flex items-center justify-center ">
@@ -89,8 +89,8 @@ export default function EmailVerificationPage() {
             <path d="M9 12h2V7H9v5zM10 14a1 1 0 110 2 1 1 0 010-2zm8-4a8 8 0 11-16 0 8 8 0 0116 0z" />
           </svg>
           <p className="ml-3 text-sm text-blue-700">
-            <strong>Important:</strong> If you don't see the email, please check your spam or junk
-            folder.
+            <strong>Important:</strong> If you don&apos;t see the email, please check your spam or
+            junk folder.
           </p>
         </div>
       </div>

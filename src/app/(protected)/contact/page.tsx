@@ -3,7 +3,6 @@
 import ProfileButton from "@/components/topbar/ProfileButton";
 import NavigationButton from "@/components/topbar/NavigationButton";
 import LogoButton from "@/components/topbar/LogoButton";
-import Image from "next/image";
 
 export default function Contact() {
   return (

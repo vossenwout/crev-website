@@ -24,7 +24,6 @@ export default function APIKey() {
   const [copySuccess, setCopySuccess] = useState("");
   const [showModal, setShowModal] = useState(false);
 
-  console.log("User", user);
   // Fetch subscription and API key on component mount
   useEffect(() => {
     if (user) {
@@ -48,6 +47,7 @@ export default function APIKey() {
   const handleGenerateAPIKey = async () => {
     try {
       setApiKey("Generating...");
+      setShowModal(false);
       const { apiKey } = await generateApiKey();
       setApiKey(apiKey);
       setCopySuccess("API Key Generated Successfully!");
@@ -55,8 +55,6 @@ export default function APIKey() {
     } catch (error) {
       setCopySuccess("Failed to Generate API Key.");
       setTimeout(() => setCopySuccess(""), 3000);
-    } finally {
-      setShowModal(false);
     }
   };
 

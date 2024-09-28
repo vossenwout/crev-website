@@ -18,7 +18,7 @@ export default function EmailLoginPage() {
         router.push("/email-verification");
       }
     }
-  }, [user]);
+  }, [user, router]);
 
   return (
     <div className="p-3 min-h-screen font-[family-name:var(--font-geist-sans)]">

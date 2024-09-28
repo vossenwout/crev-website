@@ -6,6 +6,7 @@ import ProfileButton from "@/components/topbar/ProfileButton";
 import NavigationButton from "@/components/topbar/NavigationButton";
 import LogoButton from "@/components/topbar/LogoButton";
 import { useAuthState } from "react-firebase-hooks/auth";
+import Image from "next/image";
 
 export default function Docs() {
   const router = useRouter();
@@ -147,7 +148,7 @@ export default function Docs() {
             <p className="text-gray-700 mb-2">Invoke this in a PowerShell with admin rights:</p>
             <pre className="bg-gray-100 border border-gray-300 p-4 rounded-lg text-sm overflow-x-auto">
               Invoke-Expression (Invoke-WebRequest -Uri
-              'https://raw.githubusercontent.com/vossenwout/crev/feature/add-install-scripts/scripts/install.ps1').Content
+              &apos;https://raw.githubusercontent.com/vossenwout/crev/feature/add-install-scripts/scripts/install.ps1&apos;).Content
             </pre>
           </div>
         </section>
@@ -163,8 +164,8 @@ export default function Docs() {
             </h2>
             <p className="text-gray-700 mb-4">
               Creates a <code className="bg-gray-200 px-1 rounded">.crev-config.yaml</code> file in
-              the current directory, allowing you to configure the Crev tool. This way you don't
-              have to pass flags every time you run a command.
+              the current directory, allowing you to configure the Crev tool. This way you
+              don&apos;t have to pass flags every time you run a command.
             </p>
             <pre className="bg-gray-100 border border-gray-300 p-4 rounded-lg text-sm overflow-x-auto">
               crev init
@@ -175,7 +176,7 @@ export default function Docs() {
           <div className="mb-8">
             <h2 className="text-2xl font-semibold text-gray-800 mb-2">Bundle Your Codebase</h2>
             <p className="text-gray-700 mb-4">
-              This command bundles your entire project, starting from the directory where it's
+              This command bundles your entire project, starting from the directory where it&apos;s
               executed, into a single file named{" "}
               <code className="bg-gray-200 px-1 rounded">crev-project.txt</code>.
             </p>
@@ -219,7 +220,7 @@ export default function Docs() {
             <p className="text-gray-700 mt-2">
               <span className="font-semibold text-red-600">Note:</span> It can be helpful to set up
               a <code className="bg-gray-200 px-1 rounded">.crev-config.yaml</code> by running{" "}
-              <strong> crev init</strong> so you don't have to pass these flags every time.
+              <strong> crev init</strong> so you don&apos;t have to pass these flags every time.
             </p>
           </div>
 
@@ -293,7 +294,7 @@ export default function Docs() {
                   Add the following line at the end of the file:
                 </p>
                 <pre className="bg-gray-100 border border-gray-300 p-4 rounded-lg text-sm overflow-x-auto">
-                  export CREV_API_KEY="REPLACE_WITH_YOUR_API_KEY"
+                  export CREV_API_KEY=&quot;REPLACE_WITH_YOUR_API_KEY&quot;
                 </pre>
                 <p className="text-gray-600 mt-2">
                   Save the file and restart your terminal to apply the changes.
@@ -307,8 +308,8 @@ export default function Docs() {
                   Set the API key environment variable directly using PowerShell:
                 </p>
                 <pre className="bg-gray-100 border border-gray-300 p-4 rounded-lg text-sm overflow-x-auto">
-                  [System.Environment]::SetEnvironmentVariable("CREV_API_KEY",
-                  "REPLACE_WITH_YOUR_API_KEY", "User")
+                  [System.Environment]::SetEnvironmentVariable(&quot;CREV_API_KEY&quot;,
+                  &quot;REPLACE_WITH_YOUR_API_KEY&quot;, &quot;User&quot;)
                 </pre>
                 <p className="text-gray-600 mt-2">Restart PowerShell to apply the changes.</p>
               </div>
@@ -342,7 +343,7 @@ export default function Docs() {
               rel="noopener noreferrer"
               className="flex items-center space-x-2"
             >
-              <img
+              <Image
                 src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
                 alt="GitHub Logo"
                 className="w-10 h-10"

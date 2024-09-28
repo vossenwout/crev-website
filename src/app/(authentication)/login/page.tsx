@@ -5,6 +5,7 @@ import { auth, signInWithGoogle } from "@/firebase/auth";
 import { useRouter } from "next/navigation";
 import LogoButton from "@/components/topbar/LogoButton";
 import { useEffect } from "react";
+import Image from "next/image";
 
 export default function LoginPage() {
   const [user, loading, error] = useAuthState(auth);
@@ -18,7 +19,7 @@ export default function LoginPage() {
         router.push("/email-verification");
       }
     }
-  }, [user]);
+  }, [user, router]);
 
   return (
     <div className=" p-3 min-h-screen font-[family-name:var(--font-geist-sans)]  ">
@@ -33,7 +34,7 @@ export default function LoginPage() {
               onClick={signInWithGoogle}
               className="bg-white text-black w-72 justify-center px-2 py-2 rounded-md flex items-center border border-gray-200 hover:bg-gray-100 focus:outline-none"
             >
-              <img
+              <Image
                 src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_%22G%22_logo.svg"
                 alt="Google logo"
                 className="w-6 h-6 mr-2"
@@ -44,7 +45,7 @@ export default function LoginPage() {
               onClick={() => router.push("/login/email")}
               className="bg-white text-black w-72 justify-center px-2 py-2 rounded-md flex items-center border border-gray-200 hover:bg-gray-100 focus:outline-none"
             >
-              <img
+              <Image
                 src="https://upload.wikimedia.org/wikipedia/commons/3/3d/Envelope_font_awesome.svg"
                 alt="Email logo"
                 className="w-6 h-6 mr-2"
