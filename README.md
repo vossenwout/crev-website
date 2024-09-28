@@ -1,3 +1,4 @@
+# Crev Website
 This is the website for the CREV, ai code review, project.
 It makes use of Nextjs, Typescript, Tailwind, and firebase.
 
