@@ -17,8 +17,7 @@ export default function APIKey() {
   const router = useRouter();
 
   // Subscription and API key state
-  const [isLoadingUserSubscription, setIsLoadingUserSubscription] =
-    useState(true);
+  const [isLoadingUserSubscription, setIsLoadingUserSubscription] = useState(true);
   const [userSubscription, setUserSubscription] = useState<string | null>(null);
   const [apiKey, setApiKey] = useState<string>("");
   const [isLoadingApiKey, setIsLoadingApiKey] = useState(true);
@@ -69,7 +68,7 @@ export default function APIKey() {
       () => {
         setCopySuccess("Failed to Copy API Key.");
         setTimeout(() => setCopySuccess(""), 3000);
-      },
+      }
     );
   };
 
@@ -86,17 +85,21 @@ export default function APIKey() {
 
       {/* Main Content */}
       <main className="flex-grow flex flex-col items-center justify-start mt-10 px-4">
-        <h1 className="text-3xl font-semibold text-gray-900 mb-8">
-          Manage API Keys
-        </h1>
+        <h1 className="text-3xl font-semibold text-gray-900 mb-8">Manage API Keys</h1>
+        <p className="text-gray-700 text-md mb-8 max-w-3xl">
+          To get AI reviews with the <strong>crev review</strong> command you need an API key. For
+          information on how to use the API key, please visit our{" "}
+          <a href="/docs" className="text-blue-600 underline">
+            docs
+          </a>
+          .
+        </p>
 
         <div className="w-full max-w-4xl">
           {/* Subscription Status */}
           <section className="mb-8">
             <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
-              <h2 className="text-xl font-medium text-gray-800 mb-4">
-                Subscription Status
-              </h2>
+              <h2 className="text-xl font-medium text-gray-800 mb-4">Subscription Status</h2>
               {isLoadingUserSubscription ? (
                 <p className="text-gray-500">Loading subscription status...</p>
               ) : userSubscription ? (
@@ -106,17 +109,14 @@ export default function APIKey() {
                 </p>
               ) : (
                 <p className="text-gray-700 text-base">
-                  You do not have an active subscription. Please purchase one to
-                  generate API keys.
+                  You do not have an active subscription. Please purchase one to generate API keys.
                 </p>
               )}
               <button
                 onClick={() => router.push("/subscription")}
                 className="mt-4 inline-flex items-center px-4 py-2 border border-transparent text-md font-medium rounded-md text-white bg-black hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800"
               >
-                {userSubscription
-                  ? "Manage Subscription"
-                  : "Purchase Subscription"}
+                {userSubscription ? "Manage Subscription" : "Purchase Subscription"}
               </button>
             </div>
           </section>
@@ -125,15 +125,11 @@ export default function APIKey() {
           {userSubscription && (
             <section className="mb-8">
               <div className="bg-gray-50 border border-gray-200 rounded-lg p-6">
-                <h2 className="text-xl font-medium text-gray-800 mb-4">
-                  Your API Key
-                </h2>
+                <h2 className="text-xl font-medium text-gray-800 mb-4">Your CREV API Key</h2>
                 {isLoadingApiKey ? (
                   <p className="text-gray-500">Loading API key...</p>
                 ) : apiKey === "" ? (
-                  <p className="text-gray-700">
-                    No API key found. Please generate one.
-                  </p>
+                  <p className="text-gray-700">No API key found. Please generate one.</p>
                 ) : (
                   <div className="flex items-center bg-white border border-gray-300 rounded-md p-2">
                     <span className="flex-1 text-gray-800 break-all font-mono text-sm">
@@ -150,9 +146,7 @@ export default function APIKey() {
                 {copySuccess && (
                   <p
                     className={`mt-2 text-sm ${
-                      copySuccess.includes("Failed")
-                        ? "text-red-500"
-                        : "text-green-500"
+                      copySuccess.includes("Failed") ? "text-red-500" : "text-green-500"
                     }`}
                   >
                     {copySuccess}
@@ -175,13 +169,11 @@ export default function APIKey() {
       {showModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50 px-4">
           <div className="bg-white rounded-lg p-6 max-w-sm w-full">
-            <h3 className="text-lg font-medium text-gray-900 mb-4">
-              Confirm API Key Regeneration
-            </h3>
+            <h3 className="text-lg font-medium text-gray-900 mb-4">Confirm API Key Regeneration</h3>
             <p className="text-gray-700 mb-6">
               Generating a new API key will{" "}
-              <span className="font-semibold">revoke your previous key</span>.
-              Do you wish to continue?
+              <span className="font-semibold">revoke your previous key</span>. Do you wish to
+              continue?
             </p>
             <div className="flex justify-end gap-3">
               <button
