@@ -2,6 +2,8 @@
 
 The CREV Website serves as the front-end interface for the [crev cli](https://github.com/vossenwout/crev), an AI-driven code review tool. This website allows users to sign up using firebase, view documentation and pricing, and buy / manage their subscription using Stripe.
 
+Visit the live site [here](https://crevcli.com).
+
 ## Technologies 
 
 - **Next.js:** A React framework for server-side rendering and static site generation.
