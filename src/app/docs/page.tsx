@@ -167,7 +167,7 @@ export default function Docs() {
             <p className="text-gray-700 mb-4">
               This command bundles your entire project, starting from the directory where it&apos;s
               executed, into a single file named{" "}
-              <code className="bg-gray-200 px-1 rounded">crev-project.txt</code>.
+              <code className="bg-gray-200 px-1 rounded">crev-project.md</code>.
             </p>
 
             <pre className="bg-gray-100 border border-gray-300 p-4 rounded-lg text-sm overflow-x-auto">
