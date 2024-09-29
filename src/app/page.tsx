@@ -18,7 +18,8 @@ export default function Home() {
         <section className="text-center max-w-2xl">
           <h1 className="text-4xl font-bold mb-4">CLI Tool For AI Code Reviews</h1>
           <p className="text-lg text-gray-700">
-            Harness the power of AI to improve your code quality and catch bugs early.
+            Harness the power of AI to improve your code quality and catch bugs early right from
+            your CLI.
           </p>
         </section>
 
@@ -54,8 +55,8 @@ export default function Home() {
           <div className="flex flex-col items-start bg-gray-100 p-8 rounded-lg shadow-md">
             <h2 className="text-2xl font-semibold mb-3">AI-Powered Code Reviews</h2>
             <p className="text-gray-600 mb-6">
-              Receive comprehensive AI-driven code reviews to improve code quality and
-              maintainability.
+              Receive comprehensive AI-driven code reviews to improve code quality, improve
+              performance and catch bugs.
             </p>
             <pre className="bg-black text-white p-3 rounded-md font-mono text-sm mb-6">
               $ crev review

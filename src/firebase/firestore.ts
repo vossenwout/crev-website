@@ -1,8 +1,6 @@
-// src/firebase/firestore.ts
 import { db } from "./config";
 import { collection, doc, getDoc } from "firebase/firestore";
 
-// Function to add a dummy document to Firestore
 export const fetchApiKey = async (uid: string) => {
   try {
     const userCollection = collection(db, "users");
