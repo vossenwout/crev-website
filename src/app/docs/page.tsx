@@ -167,7 +167,7 @@ export default function Docs() {
             <p className="text-gray-700 mb-4">
               This command bundles your entire project, starting from the directory where it&apos;s
               executed, into a single file named{" "}
-              <code className="bg-gray-200 px-1 rounded">crev-project.md</code>.
+              <code className="bg-gray-200 px-1 rounded">crev-project.txt</code>.
             </p>
 
             <pre className="bg-gray-100 border border-gray-300 p-4 rounded-lg text-sm overflow-x-auto">
@@ -217,8 +217,9 @@ export default function Docs() {
           <div className="mb-8">
             <h2 className="text-2xl font-semibold text-gray-800 mb-2">Get an AI Code Review</h2>
             <p className="text-gray-700 mb-4">
-              Let an AI review your bundled project file. Requires a Crev API key which you can
-              generate{" "}
+              Let an AI review your bundled project file. The review will be saved into a file{" "}
+              <code className="bg-gray-200 px-1 rounded">crev-review.md</code>. Requires a Crev API
+              key which you can generate{" "}
               <button
                 className="text-blue-600 hover:underline"
                 onClick={() => router.push("/api-key")}

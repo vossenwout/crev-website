@@ -33,7 +33,7 @@ export default function EmailAuthForm() {
       } else if (currentStep === "forgotPassword") {
         await sendPasswordResetEmail(auth, email);
         setSuccessMessage(
-          "A password reset email has been sent to your email address. Please checks spam folder."
+          "A password reset email has been sent to your email address. Please also check spam folder."
         );
         setCurrentStep("signIn");
       }
