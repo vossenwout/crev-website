@@ -123,7 +123,7 @@ export default function Docs() {
               Linux/Mac Installation Script
             </h3>
             <p className="text-gray-700 mb-2">
-              Execute the following in your terminal (requires sudo):
+              Execute the following in your terminal (<strong>requires sudo</strong>):
             </p>
             <pre className="bg-gray-100 border border-gray-300 p-4 rounded-lg text-sm overflow-x-auto">
               sudo curl -L
@@ -134,7 +134,9 @@ export default function Docs() {
             <h3 className="text-xl font-semibold text-gray-800 mt-6 mb-2">
               Windows Installation Script
             </h3>
-            <p className="text-gray-700 mb-2">Invoke this in a PowerShell with admin rights:</p>
+            <p className="text-gray-700 mb-2">
+              Invoke this in a PowerShell you opened with <strong>admin rights</strong>:
+            </p>
             <pre className="bg-gray-100 border border-gray-300 p-4 rounded-lg text-sm overflow-x-auto">
               Invoke-Expression (Invoke-WebRequest -Uri
               &apos;https://raw.githubusercontent.com/vossenwout/crev/feature/add-install-scripts/scripts/install.ps1&apos;).Content
