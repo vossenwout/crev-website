@@ -19,7 +19,7 @@ export default function Contact() {
       <main className="flex flex-col items-center justify-center px-8 py-20">
         <h1 className="text-5xl font-bold text-gray-800 mb-6">Questions?</h1>
         <p className="text-xl text-gray-600 mb-12 text-center max-w-2xl">
-          Contact: vossen.w@hotmail.com
+          Contact: crevcli@outlook.com
         </p>
       </main>
     </div>

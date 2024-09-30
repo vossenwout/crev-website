@@ -99,7 +99,7 @@ export default function Home() {
               height={40}
             />
           </a>
-          <p className="text-sm text-gray-600">Contact: vossen.w@hotmail.com</p>
+          <p className="text-sm text-gray-600">Contact: crevcli@outlook.com</p>
         </div>
       </footer>
     </div>
