@@ -126,8 +126,7 @@ export default function Docs() {
               Execute the following in your terminal (<strong>requires sudo</strong>):
             </p>
             <pre className="bg-gray-100 border border-gray-300 p-4 rounded-lg text-sm overflow-x-auto">
-              sudo curl -L
-              https://raw.githubusercontent.com/vossenwout/crev/feature/add-install-scripts/scripts/install.sh
+              sudo curl -L https://raw.githubusercontent.com/vossenwout/crev/main/scripts/install.sh
               | bash
             </pre>
 
@@ -139,7 +138,7 @@ export default function Docs() {
             </p>
             <pre className="bg-gray-100 border border-gray-300 p-4 rounded-lg text-sm overflow-x-auto">
               Invoke-Expression (Invoke-WebRequest -Uri
-              &apos;https://raw.githubusercontent.com/vossenwout/crev/feature/add-install-scripts/scripts/install.ps1&apos;).Content
+              &apos;https://raw.githubusercontent.com/vossenwout/crev/main/scripts/install.ps1&apos;).Content
             </pre>
           </div>
         </section>
