@@ -9,7 +9,8 @@ export default function MainFeatures() {
         <div className="md:w-1/2">
           <h2 className="text-2xl font-semibold mb-3">Bundle Your Codebase</h2>
           <p className="text-gray-600 mb-6">
-            Consolidate your entire codebase into a single, manageable file effortlessly.
+            Consolidate your entire codebase and directory structure into a single file
+            effortlessly.
           </p>
           <div className="flex justify-start w-full md:w-auto">
             <pre className="bg-black text-white p-3 rounded-md font-mono text-sm inline-block w-auto max-w-xs mb-6">
@@ -33,8 +34,9 @@ export default function MainFeatures() {
       <div className="flex flex-col items-start bg-gray-100 p-8 rounded-lg shadow-md">
         <h2 className="text-2xl font-semibold mb-3">AI-Powered Code Reviews</h2>
         <p className="text-gray-600 mb-6">
-          Receive comprehensive AI-driven code reviews to improve code quality, improve performance
-          and catch bugs. The review will be saved locally so you don&#39;t need to leave your IDE.
+          Receive comprehensive code reviews from an expert coding AI to improve code quality,
+          performance and catch bugs. The review will be saved locally so you don&#39;t need to
+          leave your IDE.
         </p>
         <pre className="bg-black text-white p-3 rounded-md font-mono text-sm mb-6">
           $ crev review

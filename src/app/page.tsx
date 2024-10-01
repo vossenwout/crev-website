@@ -17,7 +17,7 @@ export default function Home() {
       <main className="flex flex-col items-center justify-center px-6 py-8 space-y-12 ">
         {/* Hero Section */}
         <section className="text-center max-w-2xl">
-          <h1 className="text-4xl font-bold mb-4">CLI Tool For AI Code Reviews</h1>
+          <h1 className="text-4xl font-extrabold mb-4">CLI Tool For AI Code Reviews</h1>
           <p className="text-lg text-gray-700">
             Harness the power of AI to improve your code quality, catch bugs and become a better
             software engineer straight from your terminal.
