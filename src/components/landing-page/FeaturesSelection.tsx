@@ -13,7 +13,7 @@ export default function FeaturesSection() {
             Become a better software engineer with Crev
           </p>
           <p className="mt-4 max-w-2xl text-xl text-gray-600 lg:mx-auto">
-            Discover how Crev can help you writing better code.
+            Discover how Crev can help you write better code.
           </p>
         </div>
         {/* Features Grid */}
