@@ -41,10 +41,10 @@ export default function Docs() {
         <section>
           <h1 className="text-4xl font-bold text-gray-900 mb-6">What is crev?</h1>
           <p className="text-gray-700 text-md">
-            Crev is a command-line tool that allows you to easily bundle your codebase into a single
-            file so you can share it with an AI. Crev also provides an AI code review service that
-            inspects this bundled file, provides feedback on your code quality and helps you catch
-            bugs early.
+            Crev is an <strong>open-source </strong> command-line tool that allows you to easily{" "}
+            <strong>bundle your codebase</strong> into a single file so you can share it with an AI.
+            Crev also provides an <strong>AI code review service</strong> that provides feedback on
+            this bundled file to catch bugs early and help you become a better software engineer.
           </p>
         </section>
         {/* Installation Section */}

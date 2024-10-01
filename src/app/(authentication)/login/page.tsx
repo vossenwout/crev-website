@@ -28,7 +28,7 @@ export default function LoginPage() {
       </div>
       {!loading && !user && (
         <div className="flex flex-col items-center justify-center pt-5">
-          <h1 className="text-4xl font-bold mb-4 pb-5">Log In / Sign Up</h1>
+          <h1 className="text-4xl font-bold mb-4 pb-5">Welcome to CREV</h1>
           <div className="flex flex-col items-center justify-center gap-4">
             <button
               onClick={signInWithGoogle}
