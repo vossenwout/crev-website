@@ -47,6 +47,20 @@ export default function Docs() {
             this bundled file to catch bugs early and help you become a better software engineer.
           </p>
         </section>
+
+        {/* YouTube Video Section */}
+        <section className="flex justify-center mb-6">
+          <div className="w-96 h-56">
+            <iframe
+              className="w-full h-full rounded-lg"
+              src="https://www.youtube.com/embed/XlHmhGL88I8"
+              title="YouTube video explaining Crev"
+              frameBorder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowFullScreen
+            ></iframe>
+          </div>
+        </section>
         {/* Installation Section */}
         <section>
           <h1 className="text-4xl font-bold text-gray-900 mb-6">How to Install</h1>
